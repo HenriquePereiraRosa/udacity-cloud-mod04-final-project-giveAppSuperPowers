@@ -159,7 +159,7 @@ jobs:
             #  exit 1
             cd frontend
             npm install
-            npm audit fix
+            npm audit
 
   scan-backend:
     docker:
@@ -178,7 +178,7 @@ jobs:
             # Your code here
             #  exit 1
             cd backend
-            npm audit fix
+            npm audit
 
   deploy-infrastructure:
     docker:
