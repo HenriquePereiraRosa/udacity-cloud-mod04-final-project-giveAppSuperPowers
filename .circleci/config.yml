@@ -60,7 +60,7 @@ jobs:
       # replace with your preferred image
       - image: cimg/base:stable
     steps:
-      - aws-cli/install
+      - aws/install
       - aws/setup:
           aws-access-key-id: ${AWS_ACCESS_KEY_ID} 
           aws-secret-access-key: ${AWS_SECRET_ACCESS_KEY}
