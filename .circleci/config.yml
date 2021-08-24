@@ -48,7 +48,7 @@ jobs:
   alert:
     docker:
       # replace with your preferred image
-      - image: cimg/base:stable
+      - image: alpine:3.14
     steps:
       - slack/notify:
           channel: cicd-jobs-notification 
@@ -58,13 +58,13 @@ jobs:
   aws-setup:
     docker:
       # replace with your preferred image
-      - image: cimg/base:stable
+      - image: circleci/aws-cli@2.0.3
     steps:
-      - aws-cli/install
       - aws-cli/setup:
           aws-access-key-id: ${AWS_ACCESS_KEY_ID} 
           aws-secret-access-key: ${AWS_SECRET_ACCESS_KEY}
           aws-region: ${AWS_REGION}
+      - aws-cli/install
       - alert
 
   build-frontend:
