@@ -52,12 +52,8 @@ commands:
       #     aws-region: ${AWS_REGION}
       # - aws-cli/install
       - aws-cli/setup
-            
-jobs:
+
   alert:
-    docker:
-      # replace with your preferred image
-      - image: alpine:3.14
     steps:
       - slack/notify:
           channel: cicd-jobs-notification 
@@ -65,6 +61,8 @@ jobs:
           custom: '1 { 2     "blocks": [ 3         { 4             "type": "section", 5             "text": { 6                 "type": "mrkdwn", 7                 "text": " - PIPELINE ERROR" 8             } 9         }, 10         { 11             "type": "divider" 12         } 13     ] 14 }' 
 
 
+            
+jobs:
   build-frontend:
     docker:
       - image: circleci/node:13.8.0
@@ -76,8 +74,13 @@ jobs:
           name: Build front-end
           command: |
             # Your code here
+            # exit 1
             echo "Building frontend"
-            exit 1
+            cd frontend
+            npm install
+            npm run build
+            ls node_modules
+            cd ../
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
@@ -93,11 +96,15 @@ jobs:
           name: Back-end build
           command: |
             # Your code here
+            # exit 1
             echo "Building backend"
-            exit 1
+            npm install
+            npm run test:cov
+
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
+      - alert
 
   test-frontend:
     docker:
@@ -357,8 +364,7 @@ jobs:
 
 workflows:
   default:
-    jobs:      
-      - alert
+    jobs:
       - build-frontend
       - build-backend
       - test-frontend:
