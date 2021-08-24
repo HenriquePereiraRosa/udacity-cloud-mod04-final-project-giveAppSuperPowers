@@ -17,6 +17,7 @@ commands:
           when: on_fail
           command: |
             # Your code here
+            echo "Destroying envoironment"
             exit 1
 
   revert-migrations:
@@ -49,9 +50,9 @@ jobs:
       - image: cimg/base:stable
     steps:
       - aws/setup:
-          aws-access-key-id: AKIA5IZZCNA7WNP3G64Q 
-          aws-secret-access-key: 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 
-          aws-region: us-east-1 
+          aws-access-key-id: ${AWS_ACCESS_KEY_ID} 
+          aws-secret-access-key: ${AWS_SECRET_ACCESS_KEY}
+          aws-region: ${AWS_REGION}
 
   build-frontend:
     docker:
@@ -64,6 +65,7 @@ jobs:
           name: Build front-end
           command: |
             # Your code here
+            echo "Building frontend"
             exit 1
       - save_cache:
           paths: [frontend/node_modules]
@@ -79,8 +81,9 @@ jobs:
       - run:
           name: Back-end build
           command: |
-             # Your code here
-             exit 1
+            # Your code here
+            echo "Building backend"
+            exit 1
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
