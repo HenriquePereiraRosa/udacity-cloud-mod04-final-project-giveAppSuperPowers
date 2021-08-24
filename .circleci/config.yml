@@ -101,7 +101,7 @@ jobs:
             npm login
             npm install
             cd ../
-
+            
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
@@ -161,8 +161,7 @@ jobs:
             # Your code here
             #  exit 1
             cd frontend
-            npm install
-            npm audit --audit-level=critical
+            npm audit fix
 
   scan-backend:
     docker:
