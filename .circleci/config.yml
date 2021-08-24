@@ -43,6 +43,15 @@ commands:
               exit 1
             fi
           when: on_success
+  
+  aws-setup:
+    steps:
+      # - aws-cli/setup:
+      #     aws-access-key-id: ${AWS_ACCESS_KEY_ID} 
+      #     aws-secret-access-key: ${AWS_SECRET_ACCESS_KEY}
+      #     aws-region: ${AWS_REGION}
+      # - aws-cli/install
+      - aws-cli/setup
             
 jobs:
   alert:
@@ -55,17 +64,6 @@ jobs:
           event: fail 
           custom: '1 { 2     "blocks": [ 3         { 4             "type": "section", 5             "text": { 6                 "type": "mrkdwn", 7                 "text": " - PIPELINE ERROR" 8             } 9         }, 10         { 11             "type": "divider" 12         } 13     ] 14 }' 
 
-  aws-setup:
-    docker:
-      # replace with your preferred image
-      - image: circleci/aws-cli@2.0.3
-    steps:
-      # - aws-cli/setup:
-      #     aws-access-key-id: ${AWS_ACCESS_KEY_ID} 
-      #     aws-secret-access-key: ${AWS_SECRET_ACCESS_KEY}
-      #     aws-region: ${AWS_REGION}
-      # - aws-cli/install
-      - aws-cli/setup
 
   build-frontend:
     docker:
