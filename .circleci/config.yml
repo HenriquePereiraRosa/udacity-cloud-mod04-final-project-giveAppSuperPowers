@@ -1,7 +1,7 @@
 version: 2.1
 
 orb:
-  aws: circleci/aws-cli@2.0.3
+  aws-cli: circleci/aws-cli@2.0.3
   slack: circleci/slack@4.4.4
 
 commands:
@@ -60,8 +60,8 @@ jobs:
       # replace with your preferred image
       - image: cimg/base:stable
     steps:
-      - aws/install
-      - aws/setup:
+      - aws-cli/install
+      - aws-cli/setup:
           aws-access-key-id: ${AWS_ACCESS_KEY_ID} 
           aws-secret-access-key: ${AWS_SECRET_ACCESS_KEY}
           aws-region: ${AWS_REGION}
