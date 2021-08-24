@@ -176,7 +176,7 @@ jobs:
           keys: ["backend-build"]
       # Your job code here
       - run:
-          name: Font-end test
+          name: Back-end scan
           command: |
             # Your code here
             #  exit 1
