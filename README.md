@@ -1,5 +1,8 @@
 ## Give your Application Auto-Deploy Superpowers
 
+### Cricle CI Pipeline Status
+[![<ORG_NAME>](https://circleci.com/gh/HenriquePereiraRosa/udacity-cloud-mod04-final-project-giveAppSuperPowers.svg?style=svg)](https://app.circleci.com/pipelines/github/HenriquePereiraRosa/udacity-cloud-mod04-final-project-giveAppSuperPowers)
+
 In this project, you will prove your mastery of the following learning objectives:
 
 - Explain the fundamentals and benefits of CI/CD to achieve, build, and deploy automation for cloud-based software products.
