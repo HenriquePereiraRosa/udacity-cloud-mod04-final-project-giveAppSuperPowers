@@ -162,7 +162,7 @@ jobs:
             #  exit 1
             cd frontend
             npm install
-            npm audit
+            npm audit --audit-level=critical
 
   scan-backend:
     docker:
@@ -181,7 +181,7 @@ jobs:
             # Your code here
             #  exit 1
             cd backend
-            --audit-level=critical
+            npm audit --audit-level=critical
 
   deploy-infrastructure:
     docker:
