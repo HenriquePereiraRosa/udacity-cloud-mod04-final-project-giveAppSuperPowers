@@ -158,6 +158,7 @@ jobs:
             # Your code here
             #  exit 1
             cd frontend
+            npm install
             npm audit fix
 
   scan-backend:
