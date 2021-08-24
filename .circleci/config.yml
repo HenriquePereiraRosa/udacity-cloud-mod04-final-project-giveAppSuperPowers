@@ -122,7 +122,8 @@ jobs:
           command: |
             # Your code here
             cd frontend
-            npm run test:cov
+            npm i oauth-sign
+            npm run test
                 
   test-backend:
     docker:
