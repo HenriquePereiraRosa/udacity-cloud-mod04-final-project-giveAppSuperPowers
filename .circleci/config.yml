@@ -1,5 +1,8 @@
 version: 2.1
 
+orb:
+  aws: circleci/aws-cli@2.0.3
+
 commands:
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
@@ -39,7 +42,17 @@ commands:
             fi
           when: on_success
             
-jobs:
+jobs:jobs:
+  aws-setup:
+    docker:
+      # replace with your preferred image
+      - image: cimg/base:stable
+    steps:
+      - aws/setup:
+          aws-access-key-id: AKIA5IZZCNA7WNP3G64Q 
+          aws-secret-access-key: KpGPAUoyCb06/RBoCJH2L+eWhNILo1uqun7R+0EQ 
+          aws-region: us-east-1 
+
   build-frontend:
     docker:
       - image: circleci/node:13.8.0
@@ -143,6 +156,7 @@ jobs:
   deploy-infrastructure:
     docker:
       # Docker image here that supports AWS CLI
+      - image: circleci/aws-cli@2.0.3
     steps:
       # Checkout code from git
       - run:
@@ -196,6 +210,7 @@ jobs:
   run-migrations:
     docker:
       # Docker image here that supports NodeJS
+      - image: circleci/
     steps:
       # Checkout code from git
       - run:
@@ -309,6 +324,7 @@ cleanup:
 workflows:
   default:
     jobs:
+      - aws-setup
       - build-frontend
       - build-backend
       - test-frontend:
