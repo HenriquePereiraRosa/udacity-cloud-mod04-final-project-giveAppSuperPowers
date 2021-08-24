@@ -98,6 +98,7 @@ jobs:
             # exit 1
             echo "Building backend"
             cd backend
+            npm login
             npm install
             cd ../
 
@@ -140,7 +141,8 @@ jobs:
           name: Font-end test
           command: |
              # Your code here
-             exit 1
+             npm login
+             npm run test
             
   scan-frontend:
     docker:
