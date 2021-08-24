@@ -2,6 +2,7 @@ version: 2.1
 
 orb:
   aws: circleci/aws-cli@2.0.3
+  slack: circleci/slack@4.4.4
 
 commands:
   destroy-environment:
@@ -18,7 +19,7 @@ commands:
           command: |
             # Your code here
             echo "Destroying envoironment"
-            exit 1
+            aws cloudformation delete-stack --stack-name prod-${CIRCLE_WORKFLOW_ID}
 
   revert-migrations:
     description: Revert the last migration if successfully run in the current workflow.
@@ -44,15 +45,27 @@ commands:
           when: on_success
             
 jobs:
+  alert:
+    docker:
+      # replace with your preferred image
+      - image: cimg/base:stable
+    steps:
+      - slack/notify:
+          channel: cicd-jobs-notification 
+          event: fail 
+          custom: '1 { 2     "blocks": [ 3         { 4             "type": "section", 5             "text": { 6                 "type": "mrkdwn", 7                 "text": " - PIPELINE ERROR" 8             } 9         }, 10         { 11             "type": "divider" 12         } 13     ] 14 }' 
+
   aws-setup:
     docker:
       # replace with your preferred image
       - image: cimg/base:stable
     steps:
+      - aws-cli/install
       - aws/setup:
           aws-access-key-id: ${AWS_ACCESS_KEY_ID} 
           aws-secret-access-key: ${AWS_SECRET_ACCESS_KEY}
           aws-region: ${AWS_REGION}
+      - alert
 
   build-frontend:
     docker:
@@ -177,8 +190,8 @@ jobs:
             aws cloudformation deploy \
               --template-file .circleci/files/frontend.yml \
               #--tags project=your-tag \
-              # --stack-name "your front-end stack name with workflow id" \
-              # --parameter-overrides ID="your workflow id"  
+              --stack-name "${CIRCLE_WORKFLOW_ID}" \
+              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID}"  
               exit 1
       - run:
           name: Add back-end ip to ansible inventory
@@ -194,10 +207,15 @@ jobs:
   configure-infrastructure:
     docker:
       # Docker image here that supports Ansible
+      - image: python:3.7-alpine3.11
     steps:
       # Checkout code from git
       # Add ssh keys with fingerprint
       # attach workspace
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - ${FINGERPRINTS}
       - run:
           name: Install dependencies
           command: |
@@ -213,7 +231,7 @@ jobs:
   run-migrations:
     docker:
       # Docker image here that supports NodeJS
-      - image: circleci/
+      - image: circleci/node:13.8.0
     steps:
       # Checkout code from git
       - run:
@@ -231,8 +249,10 @@ jobs:
   deploy-frontend:
     docker:
       # Docker image here that supports AWS CLI
+      - image: circleci/aws-cli@2.0.3
     steps:
       # Checkout code from git
+      - checkout
       - run:
           name: Install dependencies
           command: |
@@ -252,10 +272,17 @@ jobs:
   deploy-backend:
     docker:
       # Docker image here that supports Ansible
+      - image: python:3.7-alpine3.11
     steps:
       # Checkout code from git
       # Add ssh keys with fingerprint
       # attach workspace
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - ${FINGERPRINTS}
+      - attach_workspace:
+          at: .
       - run:
           name: Install dependencies
           command: |
@@ -309,6 +336,7 @@ cleanup:
       # Docker image here
     steps:
       # Checkout code from git
+      - checkout
       - run:
           name: Get old stack workflow id
           command: |
