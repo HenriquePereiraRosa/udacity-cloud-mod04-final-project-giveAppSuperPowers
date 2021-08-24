@@ -42,7 +42,7 @@ commands:
             fi
           when: on_success
             
-jobs:jobs:
+jobs:
   aws-setup:
     docker:
       # replace with your preferred image
