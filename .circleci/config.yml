@@ -79,7 +79,6 @@ jobs:
             cd frontend
             npm install
             npm run build
-            ls node_modules
             cd ../
       - save_cache:
           paths: [frontend/node_modules]
@@ -100,7 +99,6 @@ jobs:
             echo "Building backend"
             cd backend
             npm install
-            npm run test:cov
             cd ../
 
       - save_cache:
@@ -117,13 +115,14 @@ jobs:
       - checkout
       # Restore from cache
       - restore_cache:
-          keys: [fontend-build]
+          keys: ["frontend-build"]
       # Your job code here
       - run:
           name: Font-end test
           command: |
-             # Your code here
-             exit 1
+            # Your code here
+            cd frontend
+            npm run test:cov
                 
   test-backend:
     docker:
@@ -134,7 +133,7 @@ jobs:
       - checkout
       # Restore from cache
       - restore_cache:
-          keys: [fontend-build]
+          keys: ["backend-build"]
       # Your job code here
       - run:
           name: Font-end test
@@ -151,13 +150,14 @@ jobs:
       - checkout
       # Restore from cache
       - restore_cache:
-          keys: [fontend-build]
+          keys: ["fontend-build"]
       # Your job code here
       - run:
-          name: Font-end test
+          name: Font-end Scan
           command: |
-             # Your code here
-             exit 1
+            # Your code here
+            #  exit 1
+            npm audit-fix -f
 
   scan-backend:
     docker:
@@ -168,7 +168,7 @@ jobs:
       - checkout
       # Restore from cache
       - restore_cache:
-          keys: [fontend-build]
+          keys: ["backend-build"]
       # Your job code here
       - run:
           name: Font-end test
