@@ -157,7 +157,7 @@ jobs:
           command: |
             # Your code here
             #  exit 1
-            npm audit fix -f
+            npm audit fix
 
   scan-backend:
     docker:
