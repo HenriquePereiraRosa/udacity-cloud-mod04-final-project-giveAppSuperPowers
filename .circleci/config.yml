@@ -48,6 +48,13 @@ commands:
             fi
           when: on_success
 
+  alert-error:
+    steps:
+      - slack/notify:
+          channel: C02CGBL09FT
+          event: fail 
+          template: basic_fail_1
+
   alert:
     parameters:
       # Add parameter here
@@ -262,16 +269,12 @@ jobs:
             - project/.circleci/ansible/inventory.txt
       # Here's where you will add some code to rollback on failure
       - destroy-environment:
-          id: ${CIRCLE_WORKFLOW_ID:0:7}
-      - slack/notify:
-          channel: C02CGBL09FT
-          event: fail
-          template: basic_fail_1
-      - alert:
-          msg: Error
-      - slack/notify:
-          event: fail
-          template: basic_fail_1
+          id: ${CIRCLE_WORKFLOW_ID:0:7}          
+      - run:
+          name: JQ install
+          command: aws cloudformation describe-stack-events --stack-name back-6ca0638
+          when: on_fail
+      - alert-error
 
   # deploy-infrastructure:
   #   docker:
