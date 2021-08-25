@@ -195,7 +195,7 @@ jobs:
       - run:
           name: Ensure back-end infrastructure exists
           command: |
-            ll
+            ls -la
             aws cloudformation deploy \
               --template-file .circleci/ansible/files/backend.yml \
               --tags project=udapeople \
@@ -204,7 +204,7 @@ jobs:
       - run:
           name: Ensure front-end infrastructure exist
           command: |
-            ll
+            ls -la
             aws cloudformation deploy \
               --template-file .circleci/ansible/files/frontend.yml \
               --tags project=udapeople \
