@@ -200,7 +200,7 @@ jobs:
             pwd
             ls .circleci
             aws cloudformation deploy \
-              --template-file .circleci/ansible/files/backend.yml \
+              --template-file .circleci/files/backend.yml \
               --tags project=udapeople \
               --stack-name "${CIRCLE_WORKFLOW_ID}" \
               --parameter-overrides ID="${CIRCLE_WORKFLOW_ID}" 
@@ -211,7 +211,7 @@ jobs:
             pwd
             ls .circleci
             aws cloudformation deploy \
-              --template-file .circleci/ansible/files/frontend.yml \
+              --template-file .circleci/files/frontend.yml \
               --tags project=udapeople \
               --stack-name "${CIRCLE_WORKFLOW_ID:0:7}" \
               --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"
