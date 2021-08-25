@@ -56,7 +56,7 @@ commands:
         default: Error
     steps:
       - slack/notify:
-          channel: cicd-jobs-notification 
+          channel: C02CGBL09FT 
           event: fail 
           custom: <<parameters.msg>>      
 
@@ -84,6 +84,7 @@ jobs:
           paths: [frontend/node_modules]
           key: frontend-build
       - slack/notify:
+          channel: C02CGBL09FT 
           event: fail
           template: basic_fail_1
 
@@ -106,6 +107,7 @@ jobs:
           paths: [backend/node_modules]
           key: backend-build
       - slack/notify:
+          channel: C02CGBL09FT 
           event: fail
           template: basic_fail_1
 
@@ -148,6 +150,7 @@ jobs:
             cd backend
             npm run test
       - slack/notify:
+          channel: C02CGBL09FT 
           event: fail
           template: basic_fail_1
             
@@ -174,6 +177,7 @@ jobs:
           paths: [frontend/node_modules]
           key: frontend-build
       - slack/notify:
+          channel: C02CGBL09FT 
           event: fail
           template: basic_fail_1
 
@@ -200,6 +204,7 @@ jobs:
           paths: [backend/node_modules]
           key: backend-build
       - slack/notify:
+          channel: C02CGBL09FT 
           event: fail
           template: basic_fail_1
 
@@ -239,6 +244,7 @@ jobs:
       - destroy-environment:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
       - slack/notify:
+          channel: C02CGBL09FT
           event: fail
           template: basic_fail_1
 
@@ -293,6 +299,7 @@ jobs:
       - destroy-environment:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
       - slack/notify:
+          channel: C02CGBL09FT
           event: fail
           template: basic_fail_1
 
@@ -321,6 +328,7 @@ jobs:
       - destroy-environment:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
       - slack/notify:
+          channel: C02CGBL09FT
           event: fail
           template: basic_fail_1
                     
@@ -349,6 +357,10 @@ jobs:
       # Here's where you will add some code to rollback on failure
       - destroy-environment:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
+      - slack/notify:
+          channel: C02CGBL09FT
+          event: fail
+          template: basic_fail_1
 
   smoke-test:
     docker:
@@ -375,6 +387,10 @@ jobs:
       # Here's where you will add some code to rollback on failure
       - destroy-environment:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
+      - slack/notify:
+          channel: C02CGBL09FT
+          event: fail
+          template: basic_fail_1
 
   cloudfront-update:
     docker:
@@ -393,6 +409,10 @@ jobs:
       # Here's where you will add some code to rollback on failure
       - destroy-environment:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
+      - slack/notify:
+          channel: C02CGBL09FT
+          event: fail
+          template: basic_fail_1
 
   cleanup:
     docker:
@@ -414,6 +434,10 @@ jobs:
             then
               # your code here
             fi
+      - slack/notify:
+          channel: C02CGBL09FT
+          event: fail
+          template: basic_fail_1
 
  
 # WORKFLOWS           
