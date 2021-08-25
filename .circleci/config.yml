@@ -4,6 +4,7 @@ orbs:
   # important to set AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY_ID and AWS REGION to use aws orb
   aws-cli: circleci/aws-cli@2.0.3
   slack: circleci/slack@4.4.4
+  jq: circleci/jq@2.2.0
 
 # COMMANDS
 
@@ -128,9 +129,11 @@ jobs:
             # Your code here
             cd frontend
             npm run test
-      - slack/notify:
-          event: fail
-          template: basic_fail_1
+      # - slack/notify:
+      #     event: fail
+      #     template: basic_fail_1
+      # - alert:
+      #   msg: Error
                 
   test-backend:
     docker:
@@ -247,6 +250,11 @@ jobs:
           channel: C02CGBL09FT
           event: fail
           template: basic_fail_1
+      # - slack/notify:
+      #     event: fail
+      #     template: basic_fail_1
+      - alert:
+          msg: Error
 
   configure-infrastructure:
     docker:
