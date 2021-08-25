@@ -57,7 +57,7 @@ commands:
     steps:
       - slack/notify:
           # channel: C02CGBL09FT
-          channel: #cicd-jobs-notification
+          channel: cicd-jobs-notification
           event: fail 
           custom: |
             {
