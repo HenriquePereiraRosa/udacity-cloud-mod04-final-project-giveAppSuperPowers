@@ -150,7 +150,7 @@ jobs:
             # Your code here
             #  exit 1
             cd frontend
-            # npm i
+            npm i
             npm audit fix
       - save_cache:
           paths: [frontend/node_modules]
