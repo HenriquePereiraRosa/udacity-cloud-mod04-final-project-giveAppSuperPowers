@@ -271,8 +271,10 @@ jobs:
       - destroy-environment:
           id: ${CIRCLE_WORKFLOW_ID:0:7}          
       - run:
-          name: JQ install
-          command: aws cloudformation describe-stack-events --stack-name back-6ca0638
+          name: Describe Stack Events
+          command: |
+            aws cloudformation describe-stack-events --stack-name back-${CIRCLE_WORKFLOW_ID:0:7}
+            aws cloudformation describe-stack-events --stack-name front-${CIRCLE_WORKFLOW_ID:0:7}
           when: on_fail
       - alert-error
 
