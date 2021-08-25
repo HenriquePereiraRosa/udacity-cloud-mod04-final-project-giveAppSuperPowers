@@ -233,9 +233,8 @@ jobs:
       # Checkout code from git
       - checkout
       - run:
-          name: JB install
-          command: |
-            sudo yum install -y jq
+          name: JQ install
+          command: yum install -y jq
       - run:
           name: Ensure back-end infrastructure exists
           command: |
