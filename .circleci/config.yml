@@ -7,10 +7,10 @@ orbs:
 commands:
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
-    parameters:
-      # Add parameter here
-      flow_id:
-        type: string
+    # parameters:
+    #   # Add parameter here
+    #   flow_id:
+    #     type: string
     steps:
       - run:
           name: Destroy environments
@@ -18,7 +18,7 @@ commands:
           command: |
             # Your code here
             echo "Destroying envoironment"
-            aws cloudformation delete-stack --stack-name prod-${CIRCLE_WORKFLOW_ID}
+            aws cloudformation delete-stack --stack-name ${CIRCLE_WORKFLOW_ID:0:7}
 
   revert-migrations:
     description: Revert the last migration if successfully run in the current workflow.
@@ -196,7 +196,7 @@ jobs:
           name: Ensure back-end infrastructure exists
           command: |
             aws cloudformation deploy \
-              --template-file .circleci/files/backend.yml \
+              --template-file .circleci/ansible/files/backend.yml \
               --tags project=udapeople \
               --stack-name "${CIRCLE_WORKFLOW_ID}" \
               --parameter-overrides ID="${CIRCLE_WORKFLOW_ID}" 
@@ -204,10 +204,10 @@ jobs:
           name: Ensure front-end infrastructure exist
           command: |
             aws cloudformation deploy \
-              --template-file .circleci/files/frontend.yml \
+              --template-file .circleci/ansible/files/frontend.yml \
               --tags project=udapeople \
-              --stack-name "${CIRCLE_WORKFLOW_ID}" \
-              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID}"
+              --stack-name "${CIRCLE_WORKFLOW_ID:0:7}" \
+              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"
       - run:
           name: Add back-end ip to ansible inventory
           command: |
