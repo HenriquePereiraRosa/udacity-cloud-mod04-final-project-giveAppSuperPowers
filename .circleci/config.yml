@@ -192,6 +192,7 @@ jobs:
       - image: amazon/aws-cli
     steps:
       # Checkout code from git
+      - checkout
       - run:
           name: Ensure back-end infrastructure exists
           command: |
@@ -205,6 +206,7 @@ jobs:
           name: Ensure front-end infrastructure exist
           command: |
             ls -la
+            pwd
             aws cloudformation deploy \
               --template-file .circleci/ansible/files/frontend.yml \
               --tags project=udapeople \
