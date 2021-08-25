@@ -136,9 +136,8 @@ jobs:
       - run:
           name: Font-end test
           command: |
-             # Your code here
-             npm login
-             npm run test
+            # Your code here
+            npm run test
             
   scan-frontend:
     docker:
