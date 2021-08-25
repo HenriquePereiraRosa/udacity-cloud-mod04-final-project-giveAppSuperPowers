@@ -273,6 +273,9 @@ jobs:
       #     template: basic_fail_1
       - alert:
           msg: Error
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
 
   configure-infrastructure:
     docker:
