@@ -150,7 +150,7 @@ jobs:
             # Your code here
             #  exit 1
             cd frontend
-            npm i
+            # npm i
             npm audit fix
       - save_cache:
           paths: [frontend/node_modules]
@@ -192,7 +192,7 @@ jobs:
             aws cloudformation deploy \
               --template-file .circleci/files/backend.yml \
               --tags project=udapeople-back-${CIRCLE_WORKFLOW_ID:0:7} \
-              --stack-name back-${CIRCLE_WORKFLOW_ID:0:7}" \
+              --stack-name back-${CIRCLE_WORKFLOW_ID:0:7} \
               --parameter-overrides ID=${CIRCLE_WORKFLOW_ID:0:7}
       - run:
           name: Ensure front-end infrastructure exist
@@ -200,7 +200,7 @@ jobs:
             aws cloudformation deploy \
               --template-file .circleci/files/frontend.yml \
               --tags project=udapeople-front-${CIRCLE_WORKFLOW_ID:0:7} \
-              --stack-name front-${CIRCLE_WORKFLOW_ID:0:7}" \
+              --stack-name front-${CIRCLE_WORKFLOW_ID:0:7} \
               --parameter-overrides ID=${CIRCLE_WORKFLOW_ID:0:7}
       - run:
           name: Add back-end ip to ansible inventory
