@@ -58,7 +58,21 @@ commands:
       - slack/notify:
           channel: C02CGBL09FT 
           event: fail 
-          custom: <<parameters.msg>>      
+          custom: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "plain_text",
+                      "text": "*<<parameters.msg>>",
+                      "emoji": true
+                    }
+                  ]
+                }
+              ]
+            }    
 
 
 # JOBS            
