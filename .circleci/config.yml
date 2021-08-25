@@ -253,9 +253,7 @@ jobs:
       #     event: fail
       #     template: basic_fail_1
       - alert:
-          msg: Error
-      - slack/notify:
-          channel: C02CGBL09FT
+          msg: "Error"
 
   configure-infrastructure:
     docker:
