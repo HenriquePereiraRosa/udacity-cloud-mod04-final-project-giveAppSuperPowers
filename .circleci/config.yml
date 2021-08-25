@@ -134,9 +134,10 @@ jobs:
           keys: ["backend-build"]
       # Your job code here
       - run:
-          name: Font-end test
+          name: Back-end test
           command: |
             # Your code here
+            cd backend
             npm run test
             
   scan-frontend:
