@@ -240,7 +240,7 @@ jobs:
       # Checkout code from git
       - checkout
       - run:
-          name: JQ & TAR install
+          name: JQ & TAR & GZIP install
           command: yum install -y jq \
             & yum install -y tar \
             & yum install -y gzip
@@ -267,9 +267,9 @@ jobs:
             aws ec2 describe-instances \
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
               --filters "Name=tag:Project,Values=udapeople" \
-              --output text >> .circleci/ansible/inventory
-            # mv inventory .circleci/ansible/inventory
-            cat .circleci/ansible/inventory
+              --output text >> .circleci/ansible/inventory.txt
+            # mv inventory .circleci/ansible/inventory.txt
+            cat .circleci/ansible/inventory.txt
       - persist_to_workspace:
           root: ~/
           paths:
@@ -301,20 +301,15 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            # Your code here
-            exit 1
+            apk add --update ansible
       - run:
           name: Configure server
           command: |
-            # Your code here
-            exit 1
+            ansible-playbook -i ~/project/.circleci/ansible/inventory.txt ~/project/.circleci/ansible/configure-server.yml
       # Here's where you will add some code to rollback on failure
       - destroy-environment:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
-      - slack/notify:
-          channel: C02CGBL09FT
-          event: fail
-          template: basic_fail_1
+      - alert-error
 
   run-migrations:
     docker:
@@ -337,10 +332,7 @@ jobs:
      # Here's where you will add some code to rollback on failure
       - destroy-environment:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
-      - slack/notify:
-          channel: C02CGBL09FT
-          event: fail
-          template: basic_fail_1
+      - alert-error
 
   deploy-frontend:
     docker:
@@ -366,10 +358,7 @@ jobs:
       # Here's where you will add some code to rollback on failure
       - destroy-environment:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
-      - slack/notify:
-          channel: C02CGBL09FT
-          event: fail
-          template: basic_fail_1
+      - alert-error
                     
   deploy-backend:
     docker:
@@ -396,10 +385,7 @@ jobs:
       # Here's where you will add some code to rollback on failure
       - destroy-environment:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
-      - slack/notify:
-          channel: C02CGBL09FT
-          event: fail
-          template: basic_fail_1
+      - alert-error
 
   smoke-test:
     docker:
@@ -426,10 +412,7 @@ jobs:
       # Here's where you will add some code to rollback on failure
       - destroy-environment:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
-      - slack/notify:
-          channel: C02CGBL09FT
-          event: fail
-          template: basic_fail_1
+      - alert-error
 
   cloudfront-update:
     docker:
@@ -448,10 +431,7 @@ jobs:
       # Here's where you will add some code to rollback on failure
       - destroy-environment:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
-      - slack/notify:
-          channel: C02CGBL09FT
-          event: fail
-          template: basic_fail_1
+      - alert-error
 
   cleanup:
     docker:
@@ -473,10 +453,7 @@ jobs:
             then
               # your code here
             fi
-      - slack/notify:
-          channel: C02CGBL09FT
-          event: fail
-          template: basic_fail_1
+      - alert-error
 
  
 # WORKFLOWS           
@@ -500,8 +477,8 @@ workflows:
             branches:
               # only: [master] 
               only: [circleci-editor/master]
-      # - configure-infrastructure:
-      #     requires: [deploy-infrastructure]
+      - configure-infrastructure:
+          requires: [deploy-infrastructure]
       # - run-migrations:
       #     requires: [configure-infrastructure]
       # - deploy-frontend:
