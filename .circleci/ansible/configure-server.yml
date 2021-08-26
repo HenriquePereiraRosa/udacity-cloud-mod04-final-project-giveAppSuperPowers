@@ -15,9 +15,19 @@
       wait_for_target_connection:
         timeout: 600
 
+    - name: "apt update."
+      # Your code here
+      become: yes
+      apt:
+        name: ["update"]
+
     - name: "install python for Ansible."
       # Your code here
+      become: yes
+      shell: apt install -y python3
+      update_cache: yes
 
   roles:
     # Your code here
     - configure-server
+    - configure-prometheus-node-explorer
