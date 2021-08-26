@@ -229,16 +229,16 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - .circleci/ansible/inventory.txt
+            - project/.circleci/ansible/inventory.txt
       # Here's where you will add some code to rollback on failure
       - destroy-environment:
           id: ${CIRCLE_WORKFLOW_ID:0:7}          
-      - run:
-          name: Describe Stack Events
-          command: |
-            aws cloudformation describe-stack-events --stack-name back-${CIRCLE_WORKFLOW_ID:0:7}
-            aws cloudformation describe-stack-events --stack-name front-${CIRCLE_WORKFLOW_ID:0:7}
-          when: on_fail
+      # - run:
+      #     name: Describe Stack Events
+      #     command: |
+      #       aws cloudformation describe-stack-events --stack-name back-${CIRCLE_WORKFLOW_ID:0:7}
+      #       aws cloudformation describe-stack-events --stack-name front-${CIRCLE_WORKFLOW_ID:0:7}
+      #     when: on_fail
       - alert-error
 
 
@@ -268,9 +268,9 @@ jobs:
           command: |
             pwd
             ls -la
-            cat .circleci/ansible/inventory.txt
-            ansible-playbook -i .circleci/ansible/inventory.txt \
-              .circleci/ansible/configure-server.yml
+            cat project/.circleci/ansible/inventory.txt
+            ansible-playbook -i project/.circleci/ansible/inventory.txt \
+              project/.circleci/ansible/configure-server.yml
       # Here's where you will add some code to rollback on failure
       - aws-cli/setup
       - destroy-environment:
