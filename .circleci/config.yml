@@ -260,7 +260,9 @@ jobs:
       - run:
           name: Install dependencies
           command: |
+            apk add --update jq
             apk add --update ansible
+            pip3 install awscli
       - run:
           name: Configure server
           command: |
