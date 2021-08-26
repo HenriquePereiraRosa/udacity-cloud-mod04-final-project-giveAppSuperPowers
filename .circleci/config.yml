@@ -282,56 +282,6 @@ jobs:
           when: on_fail
       - alert-error
 
-  # deploy-infrastructure:
-  #   docker:
-  #     # Docker image here that supports AWS CLI
-  #     - image: python:3.7-alpine3.11
-  #   steps:
-  #     # Checkout code from git
-  #     - checkout
-  #     - run:
-  #         name: Install AWS
-  #         command: |
-  #           curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-  #           unzip awscliv2.zip
-  #           sudo ./aws/install
-  #     - run:
-  #         name: Ensure back-end infrastructure exists
-  #         command: |
-  #           aws cloudformation deploy \
-  #             --template-file .circleci/files/backend.yml \
-  #             --tags project=udapeople-back-${CIRCLE_WORKFLOW_ID:0:7} \
-  #             --stack-name back-${CIRCLE_WORKFLOW_ID:0:7} \
-  #             --parameter-overrides ID=${CIRCLE_WORKFLOW_ID:0:7}
-  #     - run:
-  #         name: Ensure front-end infrastructure exist
-  #         command: |
-  #           aws cloudformation deploy \
-  #             --template-file .circleci/files/frontend.yml \
-  #             --tags project=udapeople-front-${CIRCLE_WORKFLOW_ID:0:7} \
-  #             --stack-name front-${CIRCLE_WORKFLOW_ID:0:7} \
-  #             --parameter-overrides ID=${CIRCLE_WORKFLOW_ID:0:7}
-  #     - run:
-  #         name: Add back-end ip to ansible inventory
-  #         command: |
-  #           # Your code here
-  #           exit 1
-  #     - persist_to_workspace:
-  #         root: ~/
-  #         paths:
-  #           - project/.circleci/ansible/inventory.txt
-  #     # Here's where you will add some code to rollback on failure
-  #     - destroy-environment:
-  #         id: ${CIRCLE_WORKFLOW_ID:0:7}
-  #     - slack/notify:
-  #         channel: C02CGBL09FT
-  #         event: fail
-  #         template: basic_fail_1
-  #     - alert:
-  #         msg: Error
-  #     - slack/notify:
-  #         event: fail
-  #         template: basic_fail_1
 
   configure-infrastructure:
     docker:
