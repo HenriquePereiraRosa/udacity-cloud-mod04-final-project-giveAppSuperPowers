@@ -225,7 +225,6 @@ jobs:
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
               --filters "Name=tag:Project,Values=udapeople" \
               --output text >> .circleci/ansible/inventory.txt
-            # mv inventory .circleci/ansible/inventory.txt
             cat .circleci/ansible/inventory.txt
       - persist_to_workspace:
           root: ~/
@@ -263,10 +262,14 @@ jobs:
             apk add --update jq
             apk add --update ansible
             pip3 install awscli
+      - aws-cli/setup
       - run:
           name: Configure server
           command: |
-            ansible-playbook -i ~/project/.circleci/ansible/inventory.txt ~/project/.circleci/ansible/configure-server.yml
+            pwd
+            ansible-playbook -i .circleci/ansible/inventory.txt \
+              .circleci/ansible/configure-server.yml
+            cat .circleci/ansible/inventory.txt
       # Here's where you will add some code to rollback on failure
       - aws-cli/setup
       - destroy-environment:
