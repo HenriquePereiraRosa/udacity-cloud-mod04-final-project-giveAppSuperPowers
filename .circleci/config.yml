@@ -53,34 +53,7 @@ commands:
       - slack/notify:
           channel: C02CGBL09FT
           event: fail 
-          template: basic_fail_1
-
-  alert:
-    parameters:
-      # Add parameter here
-      msg:
-        type: string
-        default: Error
-    steps:
-      - slack/notify:
-          # channel: C02CGBL09FT
-          channel: cicd-jobs-notification
-          event: fail 
-          custom: |
-            {
-              "blocks": [
-                {
-                  "type": "section",
-                  "fields": [
-                    {
-                      "type": "plain_text",
-                      "text": "<<parameters.msg>>",
-                      "emoji": true
-                    }
-                  ]
-                }
-              ]
-            }    
+          template: basic_fail_1  
 
 
 # JOBS            
@@ -150,11 +123,6 @@ jobs:
             # Your code here
             cd frontend
             npm run test
-      # - slack/notify:
-      #     event: fail
-      #     template: basic_fail_1
-      # - alert:
-      #   msg: Error
                 
   test-backend:
     docker:
@@ -173,10 +141,6 @@ jobs:
             # Your code here
             cd backend
             npm run test
-      - slack/notify:
-          channel: C02CGBL09FT 
-          event: fail
-          template: basic_fail_1
             
   scan-frontend:
     docker:
@@ -200,10 +164,6 @@ jobs:
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
-      - slack/notify:
-          channel: C02CGBL09FT 
-          event: fail
-          template: basic_fail_1
 
   scan-backend:
     docker:
@@ -227,10 +187,6 @@ jobs:
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
-      - slack/notify:
-          channel: C02CGBL09FT 
-          event: fail
-          template: basic_fail_1
 
   deploy-infrastructure:
     docker:
@@ -241,9 +197,10 @@ jobs:
       - checkout
       - run:
           name: JQ & TAR & GZIP install
-          command: yum install -y jq \
-            & yum install -y tar \
-            & yum install -y gzip
+          command: |
+            yum install -y jq
+            yum install -y tar
+            yum install -y gzip
       - run:
           name: Ensure back-end infrastructure exists
           command: |
