@@ -247,7 +247,7 @@ jobs:
           command: |
             aws cloudformation deploy \
               --template-file .circleci/files/backend.yml \
-              --tags project=udapeople-back-${CIRCLE_WORKFLOW_ID:0:7} \
+              --tags project=udapeople \
               --stack-name back-${CIRCLE_WORKFLOW_ID:0:7} \
               --parameter-overrides ID=${CIRCLE_WORKFLOW_ID:0:7}
       - run:
@@ -255,7 +255,7 @@ jobs:
           command: |
             aws cloudformation deploy \
               --template-file .circleci/files/frontend.yml \
-              --tags project=udapeople-front-${CIRCLE_WORKFLOW_ID:0:7} \
+              --tags project=udapeople \
               --stack-name front-${CIRCLE_WORKFLOW_ID:0:7} \
               --parameter-overrides ID=${CIRCLE_WORKFLOW_ID:0:7}
       - run:
@@ -264,8 +264,9 @@ jobs:
             # Your code here
             aws ec2 describe-instances \
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
-              --filters "Name=tag:Project,Values=udapeople-back-${CIRCLE_WORKFLOW_ID:0:7}" \
+              --filters "Name=tag:Project,Values=udapeople" \
               --output text >> inventory
+            cat .circleci/ansible/inventory
       - persist_to_workspace:
           root: ~/
           paths:
