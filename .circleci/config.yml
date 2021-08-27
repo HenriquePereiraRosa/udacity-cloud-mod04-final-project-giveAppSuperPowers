@@ -272,7 +272,7 @@ jobs:
             ls -la
             echo $FINGERPRINTS
             cat .circleci/ansible/inventory.txt
-      - aws-cli/setup
+      # - aws-cli/setup
       - run:
           name: Configure server
           command: |
