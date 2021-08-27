@@ -195,14 +195,14 @@ jobs:
     steps:
       # Checkout code from git
       - checkout
-      - attach_workspace:
-          at: ~/
       - run:
           name: JQ & TAR & GZIP install
           command: |
             yum install -y jq
             yum install -y tar
             yum install -y gzip
+      - attach_workspace:
+          at: ~/
       - run:
           name: Ensure back-end infrastructure exists
           command: |
