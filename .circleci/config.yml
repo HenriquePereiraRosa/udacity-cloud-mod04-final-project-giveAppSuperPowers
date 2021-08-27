@@ -264,7 +264,7 @@ jobs:
             apk add --update jq
             apk add --update ansible
             pip3 install awscli
-            pip3 install curl
+            apk add curl
       - aws-cli/setup
       - run:
           name: Configure server
