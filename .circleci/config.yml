@@ -225,7 +225,7 @@ jobs:
             # Your code here
             aws ec2 describe-instances \
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
-              --filters "Name=tag:Project,Values=udapeople" \
+              --filters "Name=tag:project,Values=udapeople" \
               --output text >> .circleci/ansible/inventory.txt
             cat .circleci/ansible/inventory.txt
       - persist_to_workspace:
@@ -264,6 +264,7 @@ jobs:
             apk add --update jq
             apk add --update ansible
             pip3 install awscli
+            pip3 install curl
       - aws-cli/setup
       - run:
           name: Configure server
