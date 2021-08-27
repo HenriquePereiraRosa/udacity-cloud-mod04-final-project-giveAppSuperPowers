@@ -25,7 +25,6 @@
       # Your code here
       become: yes
       shell: apt install -y python3
-      update_cache: yes
 
   roles:
     # Your code here
