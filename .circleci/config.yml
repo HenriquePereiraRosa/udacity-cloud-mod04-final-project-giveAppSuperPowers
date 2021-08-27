@@ -265,19 +265,18 @@ jobs:
             apk add --update ansible
             pip3 install awscli
             apk add curl
+      - aws-cli/setup
       - run:
           name: Check variables
           command: |
             pwd
             ls -la
             echo $UDACITYKEY_FINGERPRINT
-            echo ${UDACITYKEY_FINGERPRINT}
             cat .circleci/ansible/inventory.txt
       # - aws-cli/setup
       - run:
           name: Configure server
           command: |
-            export ANSIBLE_HOST_KEY_CHECKING=False
             ansible-playbook -i .circleci/ansible/inventory.txt \
               .circleci/ansible/configure-server.yml
       # Here's where you will add some code to rollback on failure
