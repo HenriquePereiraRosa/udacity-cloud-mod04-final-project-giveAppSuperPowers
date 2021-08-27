@@ -255,7 +255,7 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints:
-            - $FINGERPRINTS
+            - $UDACITYKEY_FINGERPRINT
       - attach_workspace:
           at: ~/
       - run:
@@ -270,17 +270,17 @@ jobs:
           command: |
             pwd
             ls -la
-            echo $FINGERPRINTS
-            echo ${FINGERPRINTS}
+            echo $UDACITYKEY_FINGERPRINT
+            echo ${UDACITYKEY_FINGERPRINT}
             cat .circleci/ansible/inventory.txt
       # - aws-cli/setup
       - run:
           name: Configure server
           command: |
+            export ANSIBLE_HOST_KEY_CHECKING=False
             ansible-playbook -i .circleci/ansible/inventory.txt \
               .circleci/ansible/configure-server.yml
       # Here's where you will add some code to rollback on failure
-      - aws-cli/setup
       - destroy-environment:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
       - alert-error
@@ -345,7 +345,7 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints:
-            - ${FINGERPRINTS}
+            - ${UDACITYKEY_FINGERPRINT}
       - attach_workspace:
           # at: .
           at: ~/
