@@ -271,15 +271,12 @@ jobs:
             pwd
             ls -la
             echo $FINGERPRINTS
+            echo ${FINGERPRINTS}
             cat .circleci/ansible/inventory.txt
       # - aws-cli/setup
       - run:
           name: Configure server
           command: |
-            pwd
-            ls -la
-            echo $FINGERPRINTS
-            cat .circleci/ansible/inventory.txt
             export ANSIBLE_HOST_KEY_CHECKING=False
             ansible-playbook -i .circleci/ansible/inventory.txt \
               .circleci/ansible/configure-server.yml
