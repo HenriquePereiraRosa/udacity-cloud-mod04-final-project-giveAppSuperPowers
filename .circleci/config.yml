@@ -265,6 +265,13 @@ jobs:
             apk add --update ansible
             pip3 install awscli
             apk add curl
+      - run:
+          name: Check variables
+          command: |
+            pwd
+            ls -la
+            echo $FINGERPRINTS
+            cat .circleci/ansible/inventory.txt
       - aws-cli/setup
       - run:
           name: Configure server
