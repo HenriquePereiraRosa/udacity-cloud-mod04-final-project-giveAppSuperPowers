@@ -5,6 +5,11 @@ orbs:
   aws-cli: circleci/aws-cli@2.0.3
   slack: circleci/slack@4.4.4
 
+# PIPELINE PARAMETERS
+params:
+  memstash-token:
+    type: string
+
 # COMMANDS
 
 commands:
@@ -23,13 +28,13 @@ commands:
             echo "Destroying envoironment"
             aws cloudformation delete-stack --stack-name back-<<parameters.id>>
             aws cloudformation delete-stack --stack-name front-<<parameters.id>>
-            # aws s3 rm s3://udapeople-<<parameters.id>> --recursive
+            aws s3 rm s3://udapeople-$CIRCLE_WORKFLOW_ID --recursive
 
   revert-migrations:
     description: Revert the last migration if successfully run in the current workflow.
     parameters:
       # Add parameter here
-      flow_id:
+      id:
         type: string
         default: $CIRCLE_WORKFLOW_ID   
     steps:
@@ -38,15 +43,20 @@ commands:
           # Add when this will run
           command: |
             # Curl command here to see if there was a successful migration associated with the workflow id, store result in SUCCESS variable
-            SUCCESS = 1
+            export SUCCESS=$(curl -H "token: <<parameters.id>>" \
+            --request GET https://api.memstash.io/values/migration_<<parameters.id>>)
+
+            echo SUCCESS
+            # SUCCESS = 1
             if(( $SUCCESS==1 )); 
             then
-            #  cd ~/project/backend
-            #  npm install
-            #  Add revert code here. You can find this in the Getting Started section.
-              exit 1
+             cd ~/project/backend
+             npm install
+             # Add revert code here. You can find this in the Getting Started section.
+             npm run migrations:revert
+             # exit 1
             fi
-          when: on_success
+          when: on_fail
 
   alert-error:
     steps:
@@ -297,13 +307,29 @@ jobs:
           name: Run migrations
           command: |
             # Your code here
-            exit 1
+            # exit 1
+            cd backend
+            npm install
+            npm run migrations >> migrations.txt
+            cat migrations.txt
       - run:
           name: Send migration results to memstash
           command: |
             # Your code here
-            exit 1
+            # exit 1
+            
+            cat migrations.txt
+            if cat migration.log | grep -c "has been executed successfully" > 0
+            then
+              curl -H "Content-Type: text/plain" \
+              -H "token: $CIRCLE_WORKFLOW_ID" \
+              --request PUT --data "1" https://api.memstash.io/values/migrations_$CIRCLE_WORKFLOW_ID
+            else
+              echo "-- ERROR NO SUCCESFULL MIGRATION"
+            fi
      # Here's where you will add some code to rollback on failure
+      - revert-migrations:
+          id: ${CIRCLE_WORKFLOW_ID:0:7}
       - destroy-environment:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
       - alert-error
@@ -315,20 +341,29 @@ jobs:
     steps:
       # Checkout code from git
       - checkout
+      - attach_workspace:
+          at: ~/
       - run:
           name: Install dependencies
           command: |
             # your code here
+            cd frontend : see line below
+            # npm install : already attached the workspace
+            # yum install -y sed TODO: CHECK NECESSITY
+            npm run build
       - run:
           name: Get backend url
           command: |
             # your code here
+            # export BACKEND_IP=$(sed -n 2p .circleci/ansible/inventory.txt) : -n = NOT PRINTING
+            export BACKEND_IP=$(sed 2p .circleci/ansible/inventory.txt)
             export API_URL="http://${BACKEND_IP}:3030"
             echo "${API_URL}"
       - run:
           name: Deploy frontend objects
           command: |
             # your code here
+            aws s3 cp --recursive frontend/dist s3://udapeople-$CIRCLE_WORKFLOW_ID
       # Here's where you will add some code to rollback on failure
       - destroy-environment:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
@@ -353,11 +388,17 @@ jobs:
           name: Install dependencies
           command: |
             # your code here
+            apk add --update ansible tar gzip 
       - run:
           name: Deploy backend
           command: |
             # your code here
+            ansible-playbook \
+              -i .circleci/ansible/inventory.txt \
+              .circleci/ansible/deploy-backend.yml
       # Here's where you will add some code to rollback on failure
+      - revert-migrations:
+          id: ${CIRCLE_WORKFLOW_ID:0:7}
       - destroy-environment:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
       - alert-error
@@ -419,7 +460,7 @@ jobs:
           name: Get old stack workflow id
           command: |
             # your code here
-            export OldWorkflowID="the id here"
+            export OldWorkflowID="${CIRCLE_WORKFLOW_ID:0:7}"
             export STACKS=[] #put the list of stacks here
       - run:
           name: Remove old stacks and files
