@@ -22,12 +22,12 @@
     - name: "upgrade packages"
       become: yes
       apt:
-        upgrade: yes
+        upgrade: "yes"
 
     - name: "install python for Ansible."
       # Your code here
       become: yes
-      raw: test -e /usr/bin/python3 || (apt -y update && apt install -y python3)
+      raw: test -e /usr/bin/python3 || apt install -y python3
       changed_when: false
     
   roles:
