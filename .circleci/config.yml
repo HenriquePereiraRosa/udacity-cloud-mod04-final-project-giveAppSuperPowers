@@ -308,8 +308,10 @@ jobs:
       # Checkout code from git
       - checkout
       - aws-cli/setup
-      - attach_workspace:
-          at: ~/
+      - restore_cache:
+          keys: [backend-build]
+      # - attach_workspace:
+      #     at: ~/
       - run:
           name: Run migrations
           command: |
