@@ -352,6 +352,7 @@ jobs:
               --request PUT --data "1" https://api.memstash.io/values/migrations_$CIRCLE_WORKFLOW_ID
             else
               echo "-- ERROR NO SUCCESFULL MIGRATION"
+              exit 99
             fi
       - run:
           name: Look for logs when error
