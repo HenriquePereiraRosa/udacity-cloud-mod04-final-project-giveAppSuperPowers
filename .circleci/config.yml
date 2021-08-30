@@ -332,7 +332,8 @@ jobs:
             
             cd backend
             # npm install -y already runned in BUILD jobs
-            npm run build
+            npm install -y
+            # npm run build
             npm run migrations >> migrations.txt
             cat migrations.txt
       - run:
