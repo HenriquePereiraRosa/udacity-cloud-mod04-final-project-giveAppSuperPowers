@@ -347,11 +347,11 @@ jobs:
             echo $TYPEORM_DATABASE
 
             # npm install -y already runned in BUILD jobs
-            sudo npm cache clean -f # check THIS IF STILLL FaiLing
-            sudo npm install -y # remove after comments removal
+            npm cache clean -f # check THIS IF STILLL FaiLing
+            npm install -y # remove after comments removal
             # sudo npm audit fix # remove after comments removal
-            sudo npm run build # remove after comments removal
-            sudo npm run migrations >> migrations.txt
+            npm run build # remove after comments removal
+            npm run migrations >> migrations.txt
             cat migrations.txt
       - run:
           name: Send migration results to memstash
