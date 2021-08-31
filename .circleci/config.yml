@@ -359,7 +359,6 @@ jobs:
             echo $TYPEORM_DATABASE
 
             sudo npm install -y # remove after comments removal
-
             
             ls -la # debug
 
