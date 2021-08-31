@@ -358,7 +358,11 @@ jobs:
             echo $TYPEORM_PASSWORD
             echo $TYPEORM_DATABASE
 
-            npm install -y # remove after comments removal
+            sudo npm install -y # remove after comments removal
+
+            
+            ls -la # debug
+
             npm run migrations >> migrations.txt
             cat migrations.txt
       - run:
