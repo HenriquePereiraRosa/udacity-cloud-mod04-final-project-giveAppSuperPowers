@@ -334,8 +334,8 @@ jobs:
             cd backend
             # npm install -y already runned in BUILD jobs
             npm install -y
-            npm audit fix # remove after coments removal
-            # npm run build
+            npm audit fix # remove after comments removal
+            npm run build # remove after comments removal
             npm run migrations >> migrations.txt
             cat migrations.txt
       - run:
