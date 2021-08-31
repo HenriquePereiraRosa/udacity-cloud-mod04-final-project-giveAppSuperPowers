@@ -336,15 +336,15 @@ jobs:
             cd backend
             ls -la
             
-            echo TYPEORM_MIGRATIONS_DIR
-            echo TYPEORM_ENTITIES
-            echo TYPEORM_MIGRATIONS
+            echo $TYPEORM_MIGRATIONS_DIR
+            echo $TYPEORM_ENTITIES
+            echo $TYPEORM_MIGRATIONS
             # Use these values for the local PG database from the Docker Compose file
-            echo TYPEORM_HOST
-            echo TYPEORM_PORT
-            echo TYPEORM_USERNAME
-            echo TYPEORM_PASSWORD
-            echo TYPEORM_DATABASE
+            echo $TYPEORM_HOST
+            echo $TYPEORM_PORT
+            echo $TYPEORM_USERNAME
+            echo $TYPEORM_PASSWORD
+            echo $TYPEORM_DATABASE
 
             # npm install -y already runned in BUILD jobs
             sudo npm cache clean -f # check THIS IF STILLL FaiLing
