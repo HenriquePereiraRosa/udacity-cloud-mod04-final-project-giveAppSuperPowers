@@ -336,7 +336,7 @@ jobs:
             # sudo npm cache clean -f # check THIS IF STILLL FaiLing
             sudo npm install -y # remove after comments removal
             # sudo npm audit fix # remove after comments removal
-            # sudo npm run build # remove after comments removal
+            sudo npm run build # remove after comments removal
             sudo npm run migrations >> migrations.txt
             cat migrations.txt
       - run:
