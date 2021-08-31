@@ -28,7 +28,7 @@ commands:
           when: on_fail
           command: |
             # Your code here
-            echo "Destroying envoironment"
+            echo "Destroying environment"
             aws cloudformation delete-stack --stack-name back-<<parameters.id>>
             aws cloudformation delete-stack --stack-name front-<<parameters.id>>
             if <<parameters.delete-bucket>>
@@ -333,10 +333,10 @@ jobs:
             
             cd backend
             # npm install -y already runned in BUILD jobs
-            npm install -y
-            npm audit fix # remove after comments removal
-            npm run build # remove after comments removal
-            npm run migrations >> migrations.txt
+            sudo npm install -y
+            sudo npm audit fix # remove after comments removal
+            sudo npm run build # remove after comments removal
+            sudo npm run migrations >> migrations.txt
             cat migrations.txt
       - run:
           name: Send migration results to memstash
