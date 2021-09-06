@@ -326,7 +326,7 @@ jobs:
             export TYPEORM_MIGRATIONS=./src/migrations/*.ts
             # Use these values for the local PG database from the Docker Compose file
             export TYPEORM_HOST=localhost
-            export TYPEORM_PORT=5532
+            export TYPEORM_PORT=5432
             export TYPEORM_USERNAME=postgres
             export TYPEORM_PASSWORD=password
             export TYPEORM_DATABASE=glee
@@ -334,19 +334,8 @@ jobs:
             cd backend
             ls -la
 
-            sudo npm i -g pm2
-            sudo npm i typescript
-
-            # echo ENVIRONMENT=$ENVIRONMENT > ".env"
-            # echo TYPEORM_CONNECTION=$TYPEORM_CONNECTION >> ".env"
-            # echo TYPEORM_MIGRATIONS_DIR=$TYPEORM_MIGRATIONS_DIR >> ".env"
-            # echo TYPEORM_ENTITIES=$TYPEORM_ENTITIES >> ".env"
-            # echo TYPEORM_MIGRATIONS=$TYPEORM_MIGRATIONS >> ".env"
-            # echo TYPEORM_HOST=$TYPEORM_HOST >> ".env"
-            # echo TYPEORM_PORT=$TYPEORM_PORT >> ".env"
-            # echo TYPEORM_USERNAME=$TYPEORM_USERNAME >> ".env"
-            # echo TYPEORM_PASSWORD=$TYPEORM_PASSWORD >> ".env"
-            # echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> ".env"
+            # sudo npm i -g pm2
+            # sudo npm i typescript
             
             echo $TYPEORM_MIGRATIONS_DIR
             echo $TYPEORM_ENTITIES
