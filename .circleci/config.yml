@@ -275,8 +275,8 @@ jobs:
           fingerprints:
             - $UDACITYKEY_FINGERPRINT
       - attach_workspace:
-          # at: ~/
-          at: .
+          at: ~/
+          # at: .
       - run:
           name: Install dependencies
           command: |
