@@ -364,11 +364,11 @@ jobs:
             echo $TYPEORM_PASSWORD
             echo $TYPEORM_DATABASE
 
-            sudo npm i -y # remove after comments removal
+            npm i -y # remove after comments removal
             
             echo LS -LA DEBUG:
             ls -la # debug
-            npm run migrations:revert
+
             npm run migrations >> migrations.txt
             cat migrations.txt
       - run:
