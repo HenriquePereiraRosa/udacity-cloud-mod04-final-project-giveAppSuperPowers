@@ -240,6 +240,7 @@ jobs:
           command: |
             # Your code here
             rm .circleci/ansible/inventory.txt
+            echo "[web]" >>  .circleci/ansible/inventory.txt
             aws ec2 describe-instances \
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
               --filters "Name=tag:project,Values=udapeople-${CIRCLE_WORKFLOW_ID:0:7}" \
@@ -289,11 +290,18 @@ jobs:
             pwd
             ls -la
             echo $UDACITYKEY_FINGERPRINT
+            echo "INVENTORY_FILE:"
             cat .circleci/ansible/inventory.txt
       # - aws-cli/setup
       - run:
           name: Configure server
           command: |
+            echo "PWD:"
+            pwd
+
+            echo "INVENTORY_FILE:"
+            cat .circleci/ansible/inventory.txt
+
             ansible-playbook -i .circleci/ansible/inventory.txt \
               .circleci/ansible/configure-server.yml
       # Here's where you will add some code to rollback on failure
