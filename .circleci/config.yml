@@ -327,10 +327,10 @@ jobs:
             echo "-.ENV FILE: "
             cat .env
             
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - .circleci/backend/.env
+      # - persist_to_workspace:
+      #     root: ~/
+      #     paths:
+      #       - .circleci/backend/.env
       - run:
           name: Configure server
           command: |
