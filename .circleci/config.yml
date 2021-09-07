@@ -314,6 +314,18 @@ jobs:
       # - attach_workspace:
       #     at: ~/
       - run:
+          name: Run NPM INSTALL
+          command: |
+            # Your code here
+            # exit 1 
+
+            cd backend
+            sudo npm i -y # remove after comments removal            
+            echo LS -LA DEBUG:
+            ls -la # debug
+            echo PWD DEBUG:
+            pwd
+      - run:
           name: Run migrations
           command: |
             # Your code here
@@ -334,7 +346,8 @@ jobs:
             export TYPEORM_PASSWORD=password
             export TYPEORM_DATABASE=glee
             
-            ls -la
+            pwd
+            ls -la            
 
             # sudo npm i -g pm2
             # sudo npm i typescript
