@@ -314,10 +314,12 @@ jobs:
       # - attach_workspace:
       #     at: ~/
       - run:
+          name: Run check public IP
+          command: |
+            curl -s ifconfig.me
+      - run:
           name: Run NPM INSTALL
           command: |
-            # Your code here
-            # exit 1 
 
             cd backend
             sudo npm i -y # remove after comments removal            
