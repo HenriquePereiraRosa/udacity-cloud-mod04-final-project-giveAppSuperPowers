@@ -275,7 +275,8 @@ jobs:
           fingerprints:
             - $UDACITYKEY_FINGERPRINT
       - attach_workspace:
-          at: ~/
+          # at: ~/
+          at: .
       - run:
           name: Install dependencies
           command: |
@@ -293,6 +294,24 @@ jobs:
             echo "INVENTORY_FILE:"
             cat .circleci/ansible/inventory.txt
       # - aws-cli/setup
+      - run:
+          name: Create .env
+          command: |
+            cd backend/
+            echo > ".env"
+            echo ENVIRONMENT="production" >> ".env"
+            echo TYPEORM_CONNECTION=$TYPEORM_CONNECTION >> ".env"
+            echo TYPEORM_MIGRATIONS_DIR=$TYPEORM_MIGRATIONS_DIR >> ".env"
+            echo TYPEORM_ENTITIES=$TYPEORM_ENTITIES >> ".env"
+            echo TYPEORM_MIGRATIONS=$TYPEORM_MIGRATIONS >> ".env"
+            echo TYPEORM_HOST=$TYPEORM_HOST >> ".env"
+            echo TYPEORM_PORT=$TYPEORM_PORT >> ".env"
+            echo TYPEORM_USERNAME=$TYPEORM_USERNAME >> ".env"
+            echo TYPEORM_PASSWORD=$TYPEORM_PASSWORD >> ".env"
+            echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> ".env"
+
+            echo "-.ENV FILE: "
+            cat .env
       - run:
           name: Configure server
           command: |
@@ -335,6 +354,9 @@ jobs:
             ls -la # debug
             echo PWD DEBUG:
             pwd
+            
+            cd ../util
+            docker-compose up
       - run:
           name: Run migrations
           command: |
