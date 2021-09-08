@@ -271,7 +271,7 @@ jobs:
           command: |
             echo $UDACITYKEY_FINGERPRINT
       - add_ssh_keys:
-          fingerprints: $UDACITYKEY_FINGERPRINT
+          fingerprints: [$UDACITYKEY_FINGERPRINT]
       - attach_workspace:
           at: ~/
           # at: .
