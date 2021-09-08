@@ -341,7 +341,7 @@ jobs:
             echo "INVENTORY_FILE:"
             cat .circleci/ansible/inventory.txt
             
-            export ANSIBLE_HOST_KEY_CHECKING=False # check necessity
+            # export ANSIBLE_HOST_KEY_CHECKING=False # check necessity
             ansible-playbook -i .circleci/ansible/inventory.txt \
               .circleci/ansible/configure-server.yml
       # Here's where you will add some code to rollback on failure
