@@ -271,7 +271,9 @@ jobs:
           command: |
             echo $UDACITYKEY_FINGERPRINT
       - add_ssh_keys:
-          fingerprints: [$UDACITYKEY_FINGERPRINT]
+          # fingerprints: [$UDACITYKEY_FINGERPRINT] -> seems to be given errors
+          fingerprints:
+            - "5e:9a:de:31:cc:3d:3a:12:88:9e:ce:b7:76:73:2b:25"
       - attach_workspace:
           at: ~/
           # at: .
