@@ -322,9 +322,9 @@ jobs:
             cat .env
             
       - persist_to_workspace:
-          root: ~/.circleci/backend/
+          root: ~/
           paths:
-            - .env
+            - project/.circleci/backend/.env
       - run:
           name: Configure server
           command: |
