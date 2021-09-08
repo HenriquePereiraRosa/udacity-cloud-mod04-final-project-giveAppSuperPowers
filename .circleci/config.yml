@@ -259,16 +259,19 @@ jobs:
   configure-infrastructure:
     docker:
       # Docker image here that supports Ansible
-      # - image: python:3.7-alpine3.11
-      - image: python:3.9-alpine3.14
+      - image: python:3.7-alpine3.11 
+      # - image: python:3.9-alpine3.14
     steps:
       # Checkout code from git
       # Add ssh keys with fingerprint
       # attach workspace
       - checkout
+      - run:
+          name: Check FINGER_PRINTS
+          command: |
+            echo $UDACITYKEY_FINGERPRINT
       - add_ssh_keys:
-          fingerprints:
-            - $UDACITYKEY_FINGERPRINT
+          fingerprints: $UDACITYKEY_FINGERPRINT
       - attach_workspace:
           at: ~/
           # at: .
