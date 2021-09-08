@@ -321,12 +321,12 @@ jobs:
             echo "-.ENV FILE: "
             cat .env
              
-             pwd
-             
+            pwd
+
       - persist_to_workspace:
           root: ~/
           paths:
-            - project/.circleci/backend/.env
+            - project/backend/.env
       - run:
           name: Configure server
           command: |
@@ -335,7 +335,7 @@ jobs:
             ls -la
 
             echo "ENV_FILE:"
-            cat .circleci/backend/.env
+            cat project/backend/.env
 
             echo "INVENTORY_FILE:"
             cat .circleci/ansible/inventory.txt
