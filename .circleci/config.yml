@@ -271,7 +271,7 @@ jobs:
           command: |
             echo $UDACITYKEY_FINGERPRINT
       - add_ssh_keys:
-          # fingerprints: [$UDACITYKEY_FINGERPRINT] -> seems to be given errors
+          # fingerprints: [$UDACITYKEY_FINGERPRINT] -> it's giving SSH headers error
           fingerprints:
             - "5e:9a:de:31:cc:3d:3a:12:88:9e:ce:b7:76:73:2b:25"
       - attach_workspace:
@@ -381,8 +381,8 @@ jobs:
             echo PWD DEBUG:
             pwd
             
-            cd ../util
-            docker-compose up
+            # cd ../util
+            # docker-compose up
       - run:
           name: Run migrations
           command: |
@@ -420,7 +420,7 @@ jobs:
             echo $TYPEORM_PASSWORD
             echo $TYPEORM_DATABASE
 
-            npm i -y # remove after comments removal
+            # npm i -y # remove after comments removal
             
             echo LS -LA DEBUG:
             ls -la # debug
@@ -458,8 +458,8 @@ jobs:
      # Here's where you will add some code to rollback on failure
       - revert-migrations:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
-      # - destroy-environment:
-      #     id: ${CIRCLE_WORKFLOW_ID:0:7}
+      - destroy-environment:
+          id: ${CIRCLE_WORKFLOW_ID:0:7}
       - alert-error
 
   deploy-frontend:
