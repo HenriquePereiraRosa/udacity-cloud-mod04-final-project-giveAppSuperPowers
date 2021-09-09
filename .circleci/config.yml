@@ -373,21 +373,27 @@ jobs:
       - run:
           name: Run NPM INSTALL
           command: |
-
             cd backend
             sudo npm i -y # remove after comments removal            
             echo LS -LA DEBUG:
             ls -la # debug
             echo PWD DEBUG:
             pwd
+      - run:
+          name: Run DoCkEr CoMpOsE UP
+          command: |         
+            echo LS -LA DEBUG:
+            ls -la # debug
+            echo PWD DEBUG:
+            pwd
             
-            # cd ../util
-            # docker-compose up
+            cd ../util
+            docker-compose up
       - run:
           name: Run migrations
           command: |
             # Your code here
-            # exit 1 
+            # exit 1             
 
             cd backend
             
@@ -419,8 +425,6 @@ jobs:
             echo $TYPEORM_USERNAME
             echo $TYPEORM_PASSWORD
             echo $TYPEORM_DATABASE
-
-            # npm i -y # remove after comments removal
             
             echo LS -LA DEBUG:
             ls -la # debug
