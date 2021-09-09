@@ -398,7 +398,7 @@ jobs:
             echo LS -LA DEBUG:
             ls -la # debug
             echo PWD DEBUG:
-            pwd- run:
+            pwd
       - run:
           name: Install Docker Compose
           command: |
