@@ -353,26 +353,6 @@ jobs:
       - destroy-environment:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
       - alert-error
-  
-  # configure-db:
-  #   docker:
-  #     - image: docker:latest
-  #   steps:
-  #     - checkout
-  #     - setup_remote_docker
-  #     - run:
-  #         name: Install dependencies
-  #         command: |
-  #           apk add py-pip python3-dev libffi-dev openssl-dev gcc libc-dev make
-  #           pip3 install docker-compose
-  #           apk add docker
-  #     - run:
-  #         name: Run tests
-  #         command: |
-  #           cd util
-  #           docker-compose up -d
-  #           docker run -d postgres
-  #           docker container ls
 
   run-migrations:
     docker:
@@ -443,7 +423,8 @@ jobs:
             export TYPEORM_ENTITIES=./src/modules/domain/**/*.entity.ts
             export TYPEORM_MIGRATIONS=./src/migrations/*.ts
             # Use these values for the local PG database from the Docker Compose file
-            export TYPEORM_HOST=localhost
+            # export TYPEORM_HOST=localhost
+            export TYPEORM_HOST=0.0.0.0
             export TYPEORM_PORT=5532
             export TYPEORM_USERNAME=postgres
             export TYPEORM_PASSWORD=password
