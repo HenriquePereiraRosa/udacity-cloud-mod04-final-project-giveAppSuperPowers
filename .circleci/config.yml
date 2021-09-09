@@ -667,10 +667,12 @@ workflows:
               only: [circleci-editor/master]
       - configure-infrastructure:
           requires: [deploy-infrastructure]
-      - configure-db:
-          requires: [configure-infrastructure]
+      # - configure-db:
+      #     requires: [configure-infrastructure]
+      # - run-migrations:
+      #     requires: [configure-db]
       - run-migrations:
-          requires: [configure-db]
+          requires: [configure-infrastructure]
       - deploy-frontend:
           requires: [run-migrations]
       - deploy-backend:
