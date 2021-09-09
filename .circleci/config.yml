@@ -381,13 +381,13 @@ jobs:
             pwd
       - run:
           name: Run DoCkEr CoMpOsE UP
-          command: |         
+          command: |
+            cd util    
             echo LS -LA DEBUG:
             ls -la # debug
             echo PWD DEBUG:
             pwd
             
-            cd ../util
             docker-compose up
       - run:
           name: Run migrations
