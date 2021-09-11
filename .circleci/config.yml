@@ -364,8 +364,8 @@ jobs:
       - aws-cli/setup
       # - restore_cache:
       #     keys: [backend-build]
-      # - attach_workspace:
-      #     at: ~/
+      - attach_workspace:
+          at: ~/
       - run:
           name: Run check public IP
           command: |
@@ -414,8 +414,12 @@ jobs:
             # Your code here
             # exit 1             
 
+            pwd
+            ls -la 
             cd backend
             
+            pwd
+            ls -la 
             source .env
             # export NODE_ENV=local
             # export VERSION=1
