@@ -374,11 +374,7 @@ jobs:
           name: Run NPM INSTALL
           command: |
             cd backend
-            sudo npm i -y            
-            echo LS -LA DEBUG:
-            ls -la # debug
-            echo PWD DEBUG:
-            pwd
+            sudo npm i -y
       # - run:
       #     name: Install Docker Compose
       #     command: |
@@ -426,9 +422,6 @@ jobs:
             echo $TYPEORM_USERNAME
             echo $TYPEORM_PASSWORD
             echo $TYPEORM_DATABASE
-            
-            echo LS -LA DEBUG:
-            ls -la # debug
 
             npm run migrations >> migrations.log
             cat migrations.log
@@ -446,8 +439,8 @@ jobs:
             pwd
             ls -la
 
-            cat migration.log
-            if cat migration.log | grep -c "has been executed successfully" > 0
+            cat migrations.log
+            if cat migrations.log | grep -c "has been executed successfully" > 0
             then
               curl -H "Content-Type: text/plain" \
               -H "token: $CIRCLE_WORKFLOW_ID" \
