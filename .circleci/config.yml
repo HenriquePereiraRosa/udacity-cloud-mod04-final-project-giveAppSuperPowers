@@ -294,45 +294,45 @@ jobs:
             echo "INVENTORY_FILE:"
             cat .circleci/ansible/inventory.txt
       # - aws-cli/setup
-      # - run:
-      #     name: Create .env
-      #     command: |
-      #       cd backend/
+      - run:
+          name: Create .env
+          command: |
+            cd backend/
 
-      #       export NODE_ENV=local
-      #       export VERSION=1
-      #       export TYPEORM_CONNECTION=postgres
-      #       export TYPEORM_MIGRATIONS_DIR=./src/migrations
-      #       export TYPEORM_ENTITIES=./src/modules/domain/**/*.entity.ts
-      #       export TYPEORM_MIGRATIONS=./src/migrations/*.ts
-      #       # Use these values for the local PG database from the Docker Compose file
-      #       export TYPEORM_HOST=3.83.241.109
-      #       export TYPEORM_PORT=5432
-      #       export TYPEORM_USERNAME=postgres
-      #       export TYPEORM_PASSWORD=password
-      #       export TYPEORM_DATABASE=glee
+            export NODE_ENV=local
+            export VERSION=1
+            export TYPEORM_CONNECTION=postgres
+            export TYPEORM_MIGRATIONS_DIR=./src/migrations
+            export TYPEORM_ENTITIES=./src/modules/domain/**/*.entity.ts
+            export TYPEORM_MIGRATIONS=./src/migrations/*.ts
+            # Use these values for the local PG database from the Docker Compose file
+            export TYPEORM_HOST=3.83.241.109
+            export TYPEORM_PORT=5432
+            export TYPEORM_USERNAME=postgres
+            export TYPEORM_PASSWORD=password
+            export TYPEORM_DATABASE=glee
 
-      #       echo > ".env"
-      #       echo ENVIRONMENT="production" >> ".env"
-      #       echo TYPEORM_CONNECTION=$TYPEORM_CONNECTION >> ".env"
-      #       echo TYPEORM_MIGRATIONS_DIR=$TYPEORM_MIGRATIONS_DIR >> ".env"
-      #       echo TYPEORM_ENTITIES=$TYPEORM_ENTITIES >> ".env"
-      #       echo TYPEORM_MIGRATIONS=$TYPEORM_MIGRATIONS >> ".env"
-      #       echo TYPEORM_HOST=$TYPEORM_HOST >> ".env"
-      #       echo TYPEORM_PORT=$TYPEORM_PORT >> ".env"
-      #       echo TYPEORM_USERNAME=$TYPEORM_USERNAME >> ".env"
-      #       echo TYPEORM_PASSWORD=$TYPEORM_PASSWORD >> ".env"
-      #       echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> ".env"
+            echo > ".env"
+            echo ENVIRONMENT="production" >> ".env"
+            echo TYPEORM_CONNECTION=$TYPEORM_CONNECTION >> ".env"
+            echo TYPEORM_MIGRATIONS_DIR=$TYPEORM_MIGRATIONS_DIR >> ".env"
+            echo TYPEORM_ENTITIES=$TYPEORM_ENTITIES >> ".env"
+            echo TYPEORM_MIGRATIONS=$TYPEORM_MIGRATIONS >> ".env"
+            echo TYPEORM_HOST=$TYPEORM_HOST >> ".env"
+            echo TYPEORM_PORT=$TYPEORM_PORT >> ".env"
+            echo TYPEORM_USERNAME=$TYPEORM_USERNAME >> ".env"
+            echo TYPEORM_PASSWORD=$TYPEORM_PASSWORD >> ".env"
+            echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> ".env"
 
-      #       echo "-.ENV FILE: "
-      #       cat .env
+            echo "-.ENV FILE: "
+            cat .env
              
-      #       pwd #debug
+            pwd #debug
 
-      # - persist_to_workspace:
-      #     root: ~/
-      #     paths:
-      #       - project/backend/.env
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project/backend/.env
       - run:
           name: Configure server
           command: |
@@ -416,19 +416,20 @@ jobs:
 
             cd backend
             
-            export NODE_ENV=local
-            export VERSION=1
-            export TYPEORM_CONNECTION=postgres
-            export TYPEORM_MIGRATIONS_DIR=./src/migrations
-            export TYPEORM_ENTITIES=./src/modules/domain/**/*.entity.ts
-            export TYPEORM_MIGRATIONS=./src/migrations/*.ts
-            # Use these values for the local PG database from the Docker Compose file
-            # export TYPEORM_HOST=localhost
-            export TYPEORM_HOST=3.83.241.109
-            export TYPEORM_PORT=5432
-            export TYPEORM_USERNAME=postgres
-            export TYPEORM_PASSWORD=password
-            export TYPEORM_DATABASE=glee
+            source .env
+            # export NODE_ENV=local
+            # export VERSION=1
+            # export TYPEORM_CONNECTION=postgres
+            # export TYPEORM_MIGRATIONS_DIR=./src/migrations
+            # export TYPEORM_ENTITIES=./src/modules/domain/**/*.entity.ts
+            # export TYPEORM_MIGRATIONS=./src/migrations/*.ts
+            # # Use these values for the local PG database from the Docker Compose file
+            # # export TYPEORM_HOST=localhost
+            # export TYPEORM_HOST=3.83.241.109
+            # export TYPEORM_PORT=5432
+            # export TYPEORM_USERNAME=postgres
+            # export TYPEORM_PASSWORD=password
+            # export TYPEORM_DATABASE=glee
             
             pwd
             ls -la            
