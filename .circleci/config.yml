@@ -430,14 +430,18 @@ jobs:
             echo LS -LA DEBUG:
             ls -la # debug
 
-            npm run migrations >> migrations.txt
-            cat migrations.txt
+            npm run migrations >> migrations.log
+            cat migrations.log
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project/backend/migrations.log
       - run:
           name: Send migration results to memstash
           command: |
             # Your code here
             # exit 1
-            
+            cat migration.log
             if cat migration.log | grep -c "has been executed successfully" > 0
             then
               curl -H "Content-Type: text/plain" \
