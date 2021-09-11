@@ -379,35 +379,35 @@ jobs:
             ls -la # debug
             echo PWD DEBUG:
             pwd
-      - run:
-          name: Install Docker Compose
-          command: |
-            curl -L https://github.com/docker/compose/releases/download/1.25.3/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
-            chmod +x ~/docker-compose
-            sudo mv ~/docker-compose /usr/local/bin/docker-compose
-      - setup_remote_docker
-      - run:
-          name: INSTALL DOCKER
-          command: |
-            cd backend
-            sudo npm i -y            
-            echo LS -LA DEBUG:
-            ls -la # debug
-            echo PWD DEBUG:
-            pwd
-      - run:
-          name: Run DoCkEr CoMpOsE UP
-          command: |
-            cd util    
-            echo LS -LA DEBUG:
-            ls -la # debug
-            echo PWD DEBUG:
-            pwd
+      # - run:
+      #     name: Install Docker Compose
+      #     command: |
+      #       curl -L https://github.com/docker/compose/releases/download/1.25.3/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+      #       chmod +x ~/docker-compose
+      #       sudo mv ~/docker-compose /usr/local/bin/docker-compose
+      # - setup_remote_docker
+      # - run:
+      #     name: INSTALL DOCKER
+      #     command: |
+      #       cd backend
+      #       sudo npm i -y            
+      #       echo LS -LA DEBUG:
+      #       ls -la # debug
+      #       echo PWD DEBUG:
+      #       pwd
+      # - run:
+      #     name: Run DoCkEr CoMpOsE UP
+      #     command: |
+      #       cd util    
+      #       echo LS -LA DEBUG:
+      #       ls -la # debug
+      #       echo PWD DEBUG:
+      #       pwd
             
-            # docker-compose up
-            docker-compose up -d
-            docker run -d postgres
-            docker container ls
+      #       # docker-compose up
+      #       docker-compose up -d
+      #       docker run -d postgres
+      #       docker container ls
       - run:
           name: Run migrations
           command: |
