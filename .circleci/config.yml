@@ -432,15 +432,20 @@ jobs:
 
             npm run migrations >> migrations.log
             cat migrations.log
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - project/backend/migrations.log
+      # - persist_to_workspace:
+      #     root: ~/
+      #     paths:
+      #       - project/backend/migrations.log
       - run:
           name: Send migration results to memstash
           command: |
             # Your code here
             # exit 1
+
+            cd backend
+            pwd
+            ls -la
+
             cat migration.log
             if cat migration.log | grep -c "has been executed successfully" > 0
             then
