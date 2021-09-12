@@ -15,8 +15,9 @@
     ls -la
 
 - name: CD backend
-  shell: |
-    cd /root/project/backend
+  shell: | 
+    cd backend
+    ls -la
 
 - name: Executing node
   shell: |
