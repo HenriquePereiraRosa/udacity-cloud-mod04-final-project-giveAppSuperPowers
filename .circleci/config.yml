@@ -23,6 +23,7 @@ commands:
         type: boolean
         default: false
     steps:
+      - aws-cli/setup
       - run:
           name: Destroy environments
           when: on_fail
