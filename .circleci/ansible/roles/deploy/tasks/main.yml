@@ -13,11 +13,30 @@
     dest: /home/ubuntu
     remote_src: yes
 
-- name: Start Sever
+- name: cd backend
   shell: |
     cd backend
-    sudo npm install -g npm@latest
-    sudo npm install
-    sudo npm audit fix
-    sudo npm run build
+    
+- name: npm audit fix
+  shell: |
+    npm audit fix
+    
+- name: npm install -g npm@latest
+  shell: |
+    npm install -g npm@latest
+    
+- name: npm audit fix
+  shell: |
+    npm audit fix
+    
+- name: npm install
+  shell: |
+    npm install
+    
+- name: Build
+  shell: |
+    npm run build
+
+- name: Start Sever
+  shell: |
     npm start:prod
