@@ -474,6 +474,8 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/
+      - restore_cache:
+          keys: [frontend-build]
       - run:
           name: Install dependencies
           command: |
@@ -481,6 +483,8 @@ jobs:
             cd frontend : see line below
             # npm install : already attached the workspace
             # yum install -y sed TODO: CHECK NECESSITY
+            yum install -y tar
+            yum install -y gzip
             npm run build
       - run:
           name: Get backend url
@@ -516,6 +520,8 @@ jobs:
       - attach_workspace:
           # at: .
           at: ~/
+      - restore_cache:
+          keys: [backend-build]
       - run:
           name: Install dependencies
           command: |
@@ -627,14 +633,10 @@ workflows:
               only: [circleci-editor/master]
       - configure-infrastructure:
           requires: [deploy-infrastructure]
-      # - configure-db:
-      #     requires: [configure-infrastructure]
-      # - run-migrations:
-      #     requires: [configure-db]
       - run-migrations:
           requires: [configure-infrastructure]
       - deploy-frontend:
-          requires: [run-migrations]
+          requires: [run-migrations, deploy-backend]
       - deploy-backend:
           requires: [run-migrations]
       - smoke-test:
