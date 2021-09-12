@@ -3,13 +3,13 @@
 - name: Copy backend to temp
   become: true
   copy:
-    src: /root/project/backend.zip
+    src: /root/project/backend.tar.gz
     dest: /tmp
 
 - name: Unzip backend
   become: true
   unarchive:
-    src: /tmp/backend.zip
+    src: /tmp/backend.tar.gz
     dest: /home/ubuntu
     remote_src: yes
 
