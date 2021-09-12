@@ -1,13 +1,17 @@
 ---
-- name: PWD
-  raw: |
-    bash -c "pwd >> /tmp/debug.log"
-    bash -c "ls -la >> /tmp/debug.log"
 
-- name: CD backend
-  raw: |
-    bash -c "cd backend >> /tmp/debug.log"
-    bash -c "ls -la >> /tmp/debug.log"
+- name: Copy backend to temp
+  become: true
+  copy:
+    src: /root/project/backend.zip
+    dest: /tmp
+
+- name: Unzip backend
+  become: true
+  unarchive:
+    src: /tmp/backend.zip
+    dest: /home/ubuntu
+    remote_src: yes
 
 - name: Start Sever
   raw: |
