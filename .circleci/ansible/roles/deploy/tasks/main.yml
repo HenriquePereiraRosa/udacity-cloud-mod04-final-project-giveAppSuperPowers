@@ -1,24 +1,18 @@
 ---
-# - name: Creates directory
-#   file:
-#     path: ~/web
-#     state: directory
+- name: Copy files
+  become: true
+  copy:
+    src: /home/backend.tar.gz
+    dest: /home/ubuntu/backend.tar.gz
 
-# - name: Copy index test page
-#   template:
-#     src: "backend/dist/*"
-#     dest: "~/web"
-
-- name: DEBUG
+- name: Start Sever
   shell: |
-    pwd
-    ls -la
-
-- name: CD backend
-  shell: | 
+    cd /home/ubuntu/
+    tar xzvf backend.tar.gz
+    mv home/circleci/project/backend .
     cd backend
-    ls -la
-
-- name: Executing node
-  shell: |
-    pm2 start 
+    sudo npm install -g npm@latest
+    sudo npm install -g webpack-dev-server
+    sudo npm install
+    sudo npm run build
+    sudo pm2 start mains.js
