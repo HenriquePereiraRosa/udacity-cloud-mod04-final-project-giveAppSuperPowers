@@ -564,6 +564,8 @@ jobs:
           name: cat deploy.log
           when: on_fail
           command: |
+            pwd
+            ls -la
             cat /tmp/debug.log            
       - revert-migrations:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
