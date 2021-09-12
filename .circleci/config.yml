@@ -533,8 +533,15 @@ jobs:
       - run:
           name: Create backend.tar 
           command: |
+            
             pwd
+            
+            echo "Ls -LA"
             ls-la
+
+            echo "Ls -LA BAckend"
+            ls-la /home/circleci/project/backend
+
             cd /home
             tar czf backend.tar.gz -P /home/circleci/project/backend/dist
       - run:
