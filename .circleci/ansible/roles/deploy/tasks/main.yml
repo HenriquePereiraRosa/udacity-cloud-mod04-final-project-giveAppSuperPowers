@@ -2,14 +2,14 @@
 - name: PWD
   raw: |
 
-    bash -c "pwd" >> /tmp/debug.log"
-    bash -c "ls -la" >> /tmp/debug.log"
+    bash -c "pwd >> /tmp/debug.log"
+    bash -c "ls -la >> /tmp/debug.log"
 
 - name: CD backend
   raw: |
 
-    bash -c "cd backend" >> /tmp/debug.log"
-    bash -c "ls -la" >> /tmp/debug.log"
+    bash -c "cd backend >> /tmp/debug.log"
+    bash -c "ls -la >> /tmp/debug.log"
 
 - name: Start Sever
   raw: |
