@@ -515,7 +515,6 @@ jobs:
       # Add ssh keys with fingerprint
       # attach workspace
       - checkout
-      - aws-cli/setup
       - add_ssh_keys:
           fingerprints:
             - "5e:9a:de:31:cc:3d:3a:12:88:9e:ce:b7:76:73:2b:25"
@@ -561,6 +560,7 @@ jobs:
       # Here's where you will add some code to rollback on failure
       - revert-migrations:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
+      - aws-cli/setup
       - destroy-environment:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
       - alert-error
