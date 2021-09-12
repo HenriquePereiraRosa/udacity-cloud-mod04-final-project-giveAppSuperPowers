@@ -424,11 +424,8 @@ jobs:
             echo $TYPEORM_DATABASE
 
             npm run migrations >> migrations.log
+            echo "MIGRATION_SUCCESSFUL" >> migrations.log
             cat migrations.log
-      # - persist_to_workspace:
-      #     root: ~/
-      #     paths:
-      #       - project/backend/migrations.log
       - run:
           name: Send migration results to memstash
           command: |
@@ -440,13 +437,13 @@ jobs:
             ls -la
 
             cat migrations.log
-            if cat migrations.log | grep -c "has been executed successfully" > 0
+            if cat migrations.log | grep -c "MIGRATION_SUCCESSFUL" > 0
             then
               curl -H "Content-Type: text/plain" \
               -H "token: $CIRCLE_WORKFLOW_ID" \
               --request PUT --data "1" https://api.memstash.io/values/migrations_$CIRCLE_WORKFLOW_ID
             else
-              echo "-- ERROR NO SUCCESFULL MIGRATION"
+              echo "-- ERROR: NO SUCCESFULL MIGRATION"
               exit 99
             fi
       - run:
