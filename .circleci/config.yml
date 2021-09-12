@@ -433,9 +433,6 @@ jobs:
             # exit 1
 
             cd backend
-            pwd
-            ls -la
-
             cat migrations.log
             if cat migrations.log | grep -c "MIGRATION_SUCCESSFUL" > 0
             then
@@ -483,6 +480,7 @@ jobs:
             cd frontend : see line below
             # npm install : already attached the workspace
             # yum install -y sed TODO: CHECK NECESSITY
+            yum install -y jq
             yum install -y tar
             yum install -y gzip
             npm run build
@@ -527,10 +525,17 @@ jobs:
           command: |
             # your code here
             apk add --update ansible tar gzip 
+            apk add --update jq
+            pip3 install awscli
+            apk add curl
       - run:
           name: Deploy backend
           command: |
             # your code here
+
+            pwd
+            ls -la
+
             ansible-playbook \
               -i .circleci/ansible/inventory.txt \
               .circleci/ansible/deploy-backend.yml
