@@ -14,6 +14,7 @@
     # cd backend
     # sudo npm install -g npm@latest
     # sudo npm install -g webpack-dev-server
+    bash -c "cd backend >> /tmp/debug.log"
     sudo npm install
     sudo npm run build
     # sudo pm2 start mains.js
