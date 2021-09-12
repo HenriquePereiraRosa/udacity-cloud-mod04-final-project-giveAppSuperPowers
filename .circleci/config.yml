@@ -498,9 +498,9 @@ jobs:
             # your code here
             aws s3 cp --recursive frontend/dist s3://udapeople-$CIRCLE_WORKFLOW_ID
       # Here's where you will add some code to rollback on failure
-      # - destroy-environment:
-      #     id: ${CIRCLE_WORKFLOW_ID:0:7}
-      #     delete-bucket: true
+      - destroy-environment:
+          id: ${CIRCLE_WORKFLOW_ID:0:7}
+          delete-bucket: true
       - alert-error
                     
   deploy-backend:
@@ -529,6 +529,11 @@ jobs:
             pip3 install awscli
             apk add curl
       - run:
+          name: Create backend.tar 
+          command: |
+            cd /home
+            tar czf backend.tar.gz -P /home/circleci/project/backend/dist
+      - run:
           name: Deploy backend
           command: |
             # your code here
@@ -544,6 +549,7 @@ jobs:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
       - destroy-environment:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
+          delete-bucket: true
       - alert-error
 
   smoke-test:
@@ -571,6 +577,7 @@ jobs:
       # Here's where you will add some code to rollback on failure
       - destroy-environment:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
+          delete-bucket: true
       - alert-error
 
   cloudfront-update:
@@ -590,6 +597,7 @@ jobs:
       # Here's where you will add some code to rollback on failure
       - destroy-environment:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
+          delete-bucket: true
       - alert-error
 
   cleanup:
