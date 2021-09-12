@@ -541,7 +541,8 @@ jobs:
 
             echo "Ls -LA BAckend"
             ls -la /home/circleci/project/backend
-
+            npm i -y
+            npm run build
             cd /home
             tar czf backend.tar.gz -P /home/circleci/project/backend/dist
       - run:
