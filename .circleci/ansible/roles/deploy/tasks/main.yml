@@ -1,6 +1,6 @@
 ---
 - name: Start Sever
-  shell: |
+  raw: |    
     cd backend
     sudo npm install -g npm@latest
     sudo npm install -g webpack-dev-server
