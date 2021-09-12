@@ -15,7 +15,7 @@
 
 - name: Start Sever
   raw: |
-    bash -c "cd backend >> /tmp/debug.log"
+    cd backend
     sudo npm install
     sudo npm run build
     npm start:prod
