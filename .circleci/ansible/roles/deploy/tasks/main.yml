@@ -19,20 +19,20 @@
     
 - name: npm install -g npm@latest
   shell: |
-    npm install -g npm@latest
+    sudo npm install -g npm@latest
     
 - name: npm audit fix
   shell: |
-    npm audit fix
+    sudo npm audit fix
     
 - name: npm install
   shell: |
-    npm install
+    sudo npm install
     
 - name: Build
   shell: |
-    npm run build
+    sudo npm run build
 
 - name: Start Sever
   shell: |
-    npm start:prod
+    sudo npm start:prod
