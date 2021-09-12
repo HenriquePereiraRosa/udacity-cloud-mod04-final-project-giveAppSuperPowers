@@ -553,7 +553,9 @@ jobs:
 
             pwd
             ls -la
-
+            
+            set -m
+            touch /tmp/debug.log && tail -f /tmp/debug.log &
             ansible-playbook \
               -i .circleci/ansible/inventory.txt \
               .circleci/ansible/deploy-backend.yml
