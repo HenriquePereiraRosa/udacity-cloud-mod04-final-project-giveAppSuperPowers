@@ -9,6 +9,11 @@
 #     src: "backend/dist/*"
 #     dest: "~/web"
 
+- name: DEBUG
+  shell: |
+    pwd
+    ls -la
+
 - name: CD backend
   shell: |
     cd ./backend
