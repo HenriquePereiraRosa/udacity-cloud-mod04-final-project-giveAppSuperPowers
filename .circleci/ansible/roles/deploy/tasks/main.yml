@@ -1,7 +1,20 @@
 ---
+- name: PWD
+  raw: |
+
+    bash -c "pwd" >> /tmp/debug.log"
+    bash -c "ls -la" >> /tmp/debug.log"
+
+- name: CD backend
+  raw: |
+
+    bash -c "cd backend" >> /tmp/debug.log"
+    bash -c "ls -la" >> /tmp/debug.log"
+
 - name: Start Sever
-  raw: |    
-    cd backend
+  raw: |
+
+    # cd backend
     # sudo npm install -g npm@latest
     # sudo npm install -g webpack-dev-server
     sudo npm install
