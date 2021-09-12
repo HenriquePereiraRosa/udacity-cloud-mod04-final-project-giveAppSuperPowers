@@ -545,7 +545,7 @@ jobs:
       #       npm i -y
       #       npm run build
       #       cd /home
-      #       tar czf backend.tar.gz -P /home/circleci/project/backend/dist
+            # tar czf backend.tar.gz -P /home/circleci/project/backend
       - run:
           name: Deploy backend
           command: |
@@ -553,6 +553,8 @@ jobs:
 
             pwd
             ls -la
+
+            zip -r backend.zip backend
 
             set -m
             touch /tmp/debug.log && tail -f /tmp/debug.log &
