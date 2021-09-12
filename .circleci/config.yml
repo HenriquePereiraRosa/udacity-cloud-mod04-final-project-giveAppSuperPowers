@@ -79,21 +79,21 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
-      - restore_cache:
-          keys: [frontend-build]
+      # - restore_cache:
+      #     keys: [frontend-build]
       - run:
           name: Build front-end
           command: |
             # Your code here
             # exit 1
-            echo "Building frontend"
+            echo "node_modules frontend"
             cd frontend
             npm install
             npm run build
             cd ../
       - save_cache:
           paths: [frontend/node_modules]
-          key: frontend-build
+          key: frontend-node_modules
       - alert-error
 
   build-backend:
@@ -101,18 +101,22 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
-      - restore_cache:
-          keys: [backend-build]
+      # - restore_cache:
+      #     keys: [backend-build]
       - run:
-          name: Back-end build
+          name: Back-end node_modules && Build
           command: |
             # Your code here
             # exit 1
-            echo "Building backend"
+            echo "node_modules backend"
             cd backend
             npm install
+            npm run build
       - save_cache:
           paths: [backend/node_modules]
+          key: backend-node_modules
+      - save_cache:
+          paths: [backend/dist]
           key: backend-build
       - alert-error
 
@@ -125,7 +129,7 @@ jobs:
       - checkout
       # Restore from cache
       - restore_cache:
-          keys: ["frontend-build"]
+          keys: ["frontend-node_modules"]
       # Your job code here
       - run:
           name: Font-end test
@@ -143,7 +147,7 @@ jobs:
       - checkout
       # Restore from cache
       - restore_cache:
-          keys: ["backend-build"]
+          keys: ["backend-node_modules"]
       # Your job code here
       - run:
           name: Back-end test
@@ -161,7 +165,7 @@ jobs:
       - checkout
       # Restore from cache
       - restore_cache:
-          keys: ["fontend-build"]
+          keys: ["fontend-node_modules"]
       # Your job code here
       - run:
           name: Font-end Scan
@@ -173,7 +177,7 @@ jobs:
             npm audit fix
       - save_cache:
           paths: [frontend/node_modules]
-          key: frontend-build
+          key: frontend-node_modules
 
   scan-backend:
     docker:
@@ -184,7 +188,7 @@ jobs:
       - checkout
       # Restore from cache
       - restore_cache:
-          keys: ["backend-build"]
+          keys: ["backend-node_modules"]
       # Your job code here
       - run:
           name: Back-end scan
@@ -196,7 +200,7 @@ jobs:
             npm audit fix
       - save_cache:
           paths: [backend/node_modules]
-          key: backend-build
+          key: backend-node_modules
 
   deploy-infrastructure:
     docker:
@@ -362,8 +366,6 @@ jobs:
       # Checkout code from git
       - checkout
       - aws-cli/setup
-      # - restore_cache:
-      #     keys: [backend-build]
       - attach_workspace:
           at: ~/
       - run:
