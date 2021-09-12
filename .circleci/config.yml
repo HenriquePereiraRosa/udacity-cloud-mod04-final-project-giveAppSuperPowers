@@ -471,6 +471,7 @@ jobs:
     steps:
       # Checkout code from git
       - checkout
+      - aws-cli/setup
       - attach_workspace:
           at: ~/
       - restore_cache:
@@ -514,9 +515,10 @@ jobs:
       # Add ssh keys with fingerprint
       # attach workspace
       - checkout
+      - aws-cli/setup
       - add_ssh_keys:
           fingerprints:
-            - ${UDACITYKEY_FINGERPRINT}
+            - "5e:9a:de:31:cc:3d:3a:12:88:9e:ce:b7:76:73:2b:25"
       - attach_workspace:
           # at: .
           at: ~/
@@ -561,7 +563,6 @@ jobs:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
       - destroy-environment:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
-          delete-bucket: true
       - alert-error
 
   smoke-test:
@@ -570,6 +571,8 @@ jobs:
       - image: alpine:3.14
     steps:
       # Checkout code from git
+      - checkout
+      - aws-cli/setup
       - run:
           name: Install dependencies
           command: |
@@ -598,6 +601,8 @@ jobs:
       - image: amazon/aws-cli
     steps:
       # Checkout code from git
+      - checkout
+      - aws-cli/setup
       - run:
           name: Install dependencies
           command: |
