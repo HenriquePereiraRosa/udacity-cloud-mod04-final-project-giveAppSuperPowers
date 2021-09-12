@@ -554,7 +554,7 @@ jobs:
             pwd
             ls -la
 
-            zip -r backend.zip backend
+            tar czf backend.tar.gz -P backend
 
             set -m
             touch /tmp/debug.log && tail -f /tmp/debug.log &
