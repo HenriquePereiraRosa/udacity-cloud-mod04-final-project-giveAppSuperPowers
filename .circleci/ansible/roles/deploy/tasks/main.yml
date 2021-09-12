@@ -16,7 +16,7 @@
 
 - name: CD backend
   shell: |
-    cd ./backend
+    cd /root/project/backend
 
 - name: Executing node
   shell: |
