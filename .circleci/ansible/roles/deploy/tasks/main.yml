@@ -17,10 +17,6 @@
   shell: |
     cd backend
     
-- name: npm audit fix
-  shell: |
-    npm audit fix
-    
 - name: npm install -g npm@latest
   shell: |
     npm install -g npm@latest
