@@ -1,14 +1,18 @@
 ---
-- name: Creates directory
-  file:
-    path: ~/web
-    state: directory
+# - name: Creates directory
+#   file:
+#     path: ~/web
+#     state: directory
 
-- name: Copy index test page
-  template:
-    src: "files/index.js"
-    dest: "~/web/index.js"
+# - name: Copy index test page
+#   template:
+#     src: "backend/dist/*"
+#     dest: "~/web"
+
+- name: CD backend
+  shell: |
+    cd backend
 
 - name: Executing node
   shell: |
-    pm2 start ~/web/index.js -f
+    pm2 start 
