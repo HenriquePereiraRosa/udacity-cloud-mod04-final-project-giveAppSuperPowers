@@ -376,36 +376,7 @@ jobs:
           name: Run NPM INSTALL
           command: |
             cd backend
-            sudo npm i -y
-      # - run:
-      #     name: Install Docker Compose
-      #     command: |
-      #       curl -L https://github.com/docker/compose/releases/download/1.25.3/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
-      #       chmod +x ~/docker-compose
-      #       sudo mv ~/docker-compose /usr/local/bin/docker-compose
-      # - setup_remote_docker
-      # - run:
-      #     name: INSTALL DOCKER
-      #     command: |
-      #       cd backend
-      #       sudo npm i -y            
-      #       echo LS -LA DEBUG:
-      #       ls -la # debug
-      #       echo PWD DEBUG:
-      #       pwd
-      # - run:
-      #     name: Run DoCkEr CoMpOsE UP
-      #     command: |
-      #       cd util    
-      #       echo LS -LA DEBUG:
-      #       ls -la # debug
-      #       echo PWD DEBUG:
-      #       pwd
-            
-      #       # docker-compose up
-      #       docker-compose up -d
-      #       docker run -d postgres
-      #       docker container ls
+            sudo npm i -y\
       - run:
           name: Run migrations
           command: |
@@ -480,12 +451,11 @@ jobs:
           name: Install dependencies
           command: |
             # your code here
-            cd frontend : see line below
+            cd frontend
             # npm install : already attached the workspace
-            # yum install -y sed TODO: CHECK NECESSITY
             yum install -y jq
             yum install -y tar
-            yum install -y gzip
+            yum install -y gzip unzip
             npm run build
       - run:
           name: Get backend url
@@ -531,33 +501,12 @@ jobs:
             apk add --update jq
             pip3 install awscli
             apk add curl
-      # - run:
-      #     name: Create backend.tar 
-      #     command: |
-            
-      #       pwd
-            
-      #       echo "Ls -LA"
-      #       ls -la
-
-      #       echo "Ls -LA BAckend"
-      #       ls -la /home/circleci/project/backend
-      #       npm i -y
-      #       npm run build
-      #       cd /home
-            # tar czf backend.tar.gz -P /home/circleci/project/backend
       - run:
           name: Deploy backend
           command: |
             # your code here
-
-            pwd
-            ls -la
-
             tar czf backend.tar.gz -P backend
 
-            set -m
-            touch /tmp/debug.log && tail -f /tmp/debug.log &
             ansible-playbook \
               -i .circleci/ansible/inventory.txt \
               .circleci/ansible/deploy-backend.yml
