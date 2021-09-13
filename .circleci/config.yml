@@ -94,6 +94,9 @@ jobs:
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-node_modules
+      - save_cache:
+          paths: [frontend/dist]
+          key: frontend-build
       - alert-error
 
   build-backend:
@@ -471,6 +474,9 @@ jobs:
           name: FIles Folder list
           command: |
             # your code here
+            pwd
+            ls -la
+            cd frontend
             pwd
             ls -la
       - run:
