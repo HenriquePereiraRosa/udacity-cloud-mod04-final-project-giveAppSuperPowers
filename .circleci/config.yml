@@ -462,12 +462,12 @@ jobs:
             export BACKEND_IP=$(sed 2p .circleci/ansible/inventory.txt)
             export API_URL="http://${BACKEND_IP}:3030"
             echo "${API_URL}"
-      - run:
-          name: Build project
-          command: |
-            # your code here
-            cd frontend
-            npm run build
+      # - run:
+      #     name: Build project
+      #     command: |
+      #       # your code here
+      #       cd frontend
+      #       npm run build
       - run:
           name: Deploy frontend objects
           command: |
