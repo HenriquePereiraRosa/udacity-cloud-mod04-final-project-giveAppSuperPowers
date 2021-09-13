@@ -21,13 +21,13 @@
   shell: |
     sudo npm install -g npm@latest
     
-- name: npm audit fix
-  shell: |
-    sudo npm audit fix
-    
 - name: npm install
   shell: |
     sudo npm install
+    
+- name: npm audit fix
+  shell: |
+    sudo npm audit fix
     
 - name: Build
   shell: |
