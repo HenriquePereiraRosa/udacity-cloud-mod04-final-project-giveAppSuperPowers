@@ -32,9 +32,20 @@
 #     npm run build
 #     npm start:prod
     
-- name: Start Server
+- name: npm install
   become: true
   shell: |
     cd backend
     npm install
-    npm run start
+
+- name: npm install PM2
+  become: true
+  shell: |
+    cd backend
+    npm install pm2@latest -g
+
+- name: Start Server
+  become: true
+  shell: |
+    cd backend
+    pm2 --name backend start npm -- start
