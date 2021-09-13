@@ -78,6 +78,8 @@ jobs:
     docker:
       - image: circleci/node:13.8.0
     steps:
+      - attach_workspace:
+          at: ~/
       - checkout
       # - restore_cache:
       #     keys: [frontend-build]
@@ -97,6 +99,10 @@ jobs:
       - save_cache:
           paths: [frontend/dist]
           key: frontend-build
+      - persist_to_workspace:
+          root: ~/frontend
+          paths:
+            - frontend/dist
       - alert-error
 
   build-backend:
