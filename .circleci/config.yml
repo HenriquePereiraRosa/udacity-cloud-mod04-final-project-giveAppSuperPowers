@@ -451,7 +451,8 @@ jobs:
             yum install -y jq
             yum install -y tar
             yum install -y gzip unzip
-            yum install nodejs
+            curl –sL https://rpm.nodesource.com/setup_10.x | sudo bash -
+            yum install -y nodejs
       - checkout
       - attach_workspace:
           at: ~/
