@@ -90,7 +90,7 @@ jobs:
             cd frontend
             npm install
             npm run build
-            cd ../
+            ls -la
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-node_modules
@@ -451,6 +451,7 @@ jobs:
             yum install -y jq
             yum install -y tar
             yum install -y gzip unzip
+            yum install nodejs
       - checkout
       - attach_workspace:
           at: ~/
@@ -465,11 +466,12 @@ jobs:
             export BACKEND_IP=$(sed 2p .circleci/ansible/inventory.txt)
             export API_URL="http://${BACKEND_IP}:3030"
             echo "${API_URL}"
-      # - run:
-      #     name: Build project
-      #     command: |
-      #       # your code here
-      #       cd frontend
+      - run:
+          name: Build project
+          command: |
+            # your code here
+            cd frontend
+            npm run build
       - run:
           name: FIles Folder list
           command: |
