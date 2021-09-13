@@ -103,7 +103,7 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - frontend/dist
+            - project/frontend/dist
       - alert-error
 
   build-backend:
