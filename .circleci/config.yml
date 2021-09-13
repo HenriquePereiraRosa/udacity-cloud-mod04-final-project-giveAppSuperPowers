@@ -441,11 +441,6 @@ jobs:
       - image: amazon/aws-cli
     steps:
       # Checkout code from git
-      - checkout
-      - attach_workspace:
-          at: ~/
-      - restore_cache:
-          keys: [frontend-build]
       - run:
           name: Install dependencies
           command: |
@@ -456,6 +451,11 @@ jobs:
             yum install -y tar
             yum install -y gzip unzip
             npm run build
+      - checkout
+      - attach_workspace:
+          at: ~/
+      - restore_cache:
+          keys: [frontend-build]
       - aws-cli/setup
       - run:
           name: Get backend url
