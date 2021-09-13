@@ -17,16 +17,24 @@
   shell: |
     cd backend
     
-- name: npm install -g npm@latest
-  become: true
-  shell: |
-    npm install -g npm@latest
+# - name: npm install -g npm@latest
+#   become: true
+#   shell: |
+#     npm install -g npm@latest
+    
+# - name: Start Server
+#   become: true
+#   shell: |
+#     cd backend
+#     npm install
+#     npm audit fix -f
+#     npm audit fix
+#     npm run build
+#     npm start:prod
     
 - name: Start Server
   become: true
   shell: |
     cd backend
     npm install
-    npm audit fix
-    npm run build
     npm start:prod
