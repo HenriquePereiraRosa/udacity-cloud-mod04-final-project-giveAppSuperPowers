@@ -445,12 +445,9 @@ jobs:
           name: Install dependencies
           command: |
             # your code here
-            cd frontend
-            # npm install : already attached the workspace
             yum install -y jq
             yum install -y tar
             yum install -y gzip unzip
-            npm run build
       - checkout
       - attach_workspace:
           at: ~/
@@ -465,6 +462,12 @@ jobs:
             export BACKEND_IP=$(sed 2p .circleci/ansible/inventory.txt)
             export API_URL="http://${BACKEND_IP}:3030"
             echo "${API_URL}"
+      - run:
+          name: Build project
+          command: |
+            # your code here
+            cd frontend
+            npm run build
       - run:
           name: Deploy frontend objects
           command: |
