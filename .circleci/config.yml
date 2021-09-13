@@ -442,7 +442,6 @@ jobs:
     steps:
       # Checkout code from git
       - checkout
-      - aws-cli/setup
       - attach_workspace:
           at: ~/
       - restore_cache:
@@ -457,6 +456,7 @@ jobs:
             yum install -y tar
             yum install -y gzip unzip
             npm run build
+      - aws-cli/setup
       - run:
           name: Get backend url
           command: |
