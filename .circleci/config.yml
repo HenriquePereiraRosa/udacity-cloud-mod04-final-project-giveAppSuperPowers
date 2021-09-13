@@ -471,7 +471,10 @@ jobs:
           name: Build project
           command: |
             # your code here
+            pwd
+            ls -la
             cd frontend
+            npm install
             npm run build
       - run:
           name: FIles Folder list
@@ -486,6 +489,8 @@ jobs:
           name: Deploy frontend objects
           command: |
             # your code here
+            pwd
+            ls -la
             aws s3 cp --recursive frontend/dist s3://udapeople-$CIRCLE_WORKFLOW_ID
       # Here's where you will add some code to rollback on failure
       - destroy-environment:
