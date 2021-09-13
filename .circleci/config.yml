@@ -103,7 +103,7 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - project/frontend/dist
+            - /home/circleci/project/frontend/dist
       - alert-error
 
   build-backend:
