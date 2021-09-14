@@ -576,9 +576,9 @@ jobs:
             echo DEBUG
             pwd
             ls -la
-            cat ./smoke.txt
+            cat /root/project/smoke.txt
 
-            source smoke.txt
+            source /root/project/smoke.txt
             URL_STATUS=$API_URL/api/status
 
             
