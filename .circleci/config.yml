@@ -587,8 +587,9 @@ jobs:
             
             echo DEBUG CURL
             curl -s $URL_STATUS
+            
             echo DEBUG CURL2
-            curl -s $URL_STATUS | grep ""status": "ok""
+            curl -s $URL_STATUS | grep "ok"
 
             if ""
               then
@@ -596,7 +597,7 @@ jobs:
               else
               echo FALSE
             fi
-            
+
           
 
             if (curl -s $URL_STATUS | grep ""status": "ok"") == "status": "ok"
