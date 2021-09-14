@@ -463,7 +463,6 @@ jobs:
           name: Get backend url
           command: |
             # your code here
-            # export BACKEND_IP=$(sed -n 2p .circleci/ansible/inventory.txt) : -n = NOT PRINTING
             export BACKEND_IP=$(sed 2p .circleci/ansible/inventory.txt)
             export API_URL="http://${BACKEND_IP}:3030"
 
