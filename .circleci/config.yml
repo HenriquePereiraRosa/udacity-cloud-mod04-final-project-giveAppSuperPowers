@@ -590,14 +590,13 @@ jobs:
             echo DEBUG CURL2
             curl -s $URL_STATUS | grep ""status": "ok""
 
-              if ""
+            if ""
               then
                 echo TRUE
-                return 1
               else
               echo FALSE
-                return 0
             fi
+          
 
             if (curl -s $URL_STATUS | grep ""status": "ok"") == "status": "ok"
               then
