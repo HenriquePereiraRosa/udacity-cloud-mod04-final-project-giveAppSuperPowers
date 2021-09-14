@@ -587,27 +587,42 @@ jobs:
             
             echo DEBUG CURL
             curl -s $URL_STATUS
+            echo DEBUG CURL2
+            curl -s $URL_STATUS | grep ""status": "ok""
 
-            if curl -s $URL_STATUS | grep ""status": "ok""
+              if ""
               then
+                echo TRUE
                 return 1
               else
+              echo FALSE
                 return 0
             fi
+
+            if (curl -s $URL_STATUS | grep ""status": "ok"") == "status": "ok"
+              then
+                return 0
+              else
+                return 1
+            fi
+            
+            
       - run:
           name: Frontend smoke test.
           command: |
             # your code here
-            URL=https://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3.amazonaws.com/index.html#/employees
+            URL=https://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3.amazonaws.com/index.html
 
             echo DEBUG CURL
             curl -s $URL
+            echo DEBUG CURL2
+            curl -s $URL | grep "Welcome"
 
-            if curl -s $URL | grep "Welcome"
+            if curl -s $URL | grep "Welcome" == "Welcome"
               then
-                return 1
-              else
                 return 0
+              else
+                return 1
             fi
       # Here's where you will add some code to rollback on failure
       - destroy-environment:
