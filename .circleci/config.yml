@@ -596,6 +596,7 @@ jobs:
               else
               echo FALSE
             fi
+            
           
 
             if (curl -s $URL_STATUS | grep ""status": "ok"") == "status": "ok"
