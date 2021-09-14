@@ -574,8 +574,9 @@ jobs:
             # your code here
             
             echo DEBUG
+            pwd
             ls -la
-            cat smoke.txt
+            cat ./smoke.txt
 
             source smoke.txt
             URL_STATUS=$API_URL/api/status
