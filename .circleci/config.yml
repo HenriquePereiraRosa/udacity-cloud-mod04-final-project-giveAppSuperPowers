@@ -466,7 +466,16 @@ jobs:
             # export BACKEND_IP=$(sed -n 2p .circleci/ansible/inventory.txt) : -n = NOT PRINTING
             export BACKEND_IP=$(sed 2p .circleci/ansible/inventory.txt)
             export API_URL="http://${BACKEND_IP}:3030"
-            echo "${API_URL}"
+            echo $BACKEND_IP > smoke.txt
+            echo $API_URL >> smoke.txt 
+            cat smoke.txt
+
+            ls -la
+            
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project/smoke.txt
       - run:
           name: Build project
           command: |
