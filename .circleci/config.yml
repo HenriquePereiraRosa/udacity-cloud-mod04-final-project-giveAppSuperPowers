@@ -470,6 +470,7 @@ jobs:
             echo $API_URL >> smoke.txt 
             cat smoke.txt
 
+            echo "DEBUG LS -LA"
             ls -la
             
       - persist_to_workspace:
@@ -486,20 +487,9 @@ jobs:
             npm install
             npm run build
       - run:
-          name: FIles Folder list
-          command: |
-            # your code here
-            pwd
-            ls -la
-            cd frontend
-            pwd
-            ls -la
-      - run:
           name: Deploy frontend objects
           command: |
             # your code here
-            pwd
-            ls -la
             aws s3 cp --recursive frontend/dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7}
       # Here's where you will add some code to rollback on failure
       - destroy-environment:
@@ -520,7 +510,6 @@ jobs:
           fingerprints:
             - "5e:9a:de:31:cc:3d:3a:12:88:9e:ce:b7:76:73:2b:25"
       - attach_workspace:
-          # at: .
           at: ~/
       - restore_cache:
           keys: [backend-node_modules]
@@ -559,27 +548,62 @@ jobs:
   smoke-test:
     docker:
       # Lightweight Docker image
-      - image: alpine:3.14
+      - image: python:3.7-alpine3.11
     steps:
       # Checkout code from git
-      - checkout
-      - aws-cli/setup
       - run:
           name: Install dependencies
           command: |
             # your code here
-      - run:
-          name: Get backend url
-          command: |
-            # your code here
+            apk add --update ansible tar gzip 
+            apk add --update jq
+            pip3 install awscli
+            apk add curl
+      - checkout
+      - aws-cli/setup
+      - attach_workspace:
+          at: ~/
+      # - run:
+      #     name: Get backend url
+      #     command: |
+      #       # your code here
       - run:
           name: Backend smoke test.
           command: |
             # your code here
+            
+            echo DEBUG
+            ls-la
+            cat smoke.txt
+
+            source smoke.txt
+            URL_STATUS=$API_URL/api/status
+
+            
+            echo DEBUG CURL
+            curl -s $URL_STATUS
+
+            if curl -s $URL_STATUS | grep ""status": "ok""
+              then
+                return 1
+              else
+                return 0
+            fi
       - run:
           name: Frontend smoke test.
           command: |
             # your code here
+            URL=https://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3.amazonaws.com/index.html#/employees
+
+            echo DEBUG CURL
+            curl -s $URL
+
+            if curl -s $URL | grep "Welcome"
+              then
+                return 1
+              else
+                return 0
+            fi
       # Here's where you will add some code to rollback on failure
       - destroy-environment:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
