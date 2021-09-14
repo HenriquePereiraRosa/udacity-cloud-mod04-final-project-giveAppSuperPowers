@@ -464,7 +464,7 @@ jobs:
           command: |
             # your code here
             # export BACKEND_IP=$(sed 2p .circleci/ansible/inventory.txt)
-            export BACKEND_IP=$(grep -m 2 -o '.*' .circleci/ansible/inventory.txt | cut -d ':' -f 1 | tail -n 1)
+            export BACKEND_IP=$(tail -n 1 .circleci/ansible/inventory.txt)
             export API_URL="http://${BACKEND_IP}:3030"
 
             echo > "smoke.txt"
