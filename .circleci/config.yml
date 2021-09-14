@@ -31,7 +31,7 @@ commands:
             echo "Destroying environment"
             if <<parameters.delete-bucket>>
             then
-              aws s3 rm s3://udapeople-$CIRCLE_WORKFLOW_ID --recursive
+              aws s3 rm s3://udapeople-<<parameters.id>> --recursive
             fi
             aws cloudformation delete-stack --stack-name back-<<parameters.id>>
             aws cloudformation delete-stack --stack-name front-<<parameters.id>>
@@ -573,31 +573,11 @@ jobs:
           name: Backend smoke test.
           command: |
             # your code here
-            
-            echo DEBUG
-            pwd
-            ls -la
             echo DEBUG SMOKE.TXT:
             cat smoke.txt
 
             source smoke.txt
             URL_STATUS=$API_URL/api/status
-
-            
-            echo DEBUG CURL
-            curl -s $URL_STATUS
-            
-            echo DEBUG CURL2
-            curl -s $URL_STATUS | grep "ok"
-
-            if curl -s $URL_STATUS | grep "ok"
-              then
-                echo TRUE
-              else
-              echo FALSE
-            fi
-
-          
 
             if curl -s $URL_STATUS | grep "ok"
               then
@@ -611,11 +591,6 @@ jobs:
           command: |
             # your code here
             URL=https://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3.amazonaws.com/index.html
-
-            echo DEBUG CURL
-            curl -s $URL
-            echo DEBUG CURL2
-            curl -s $URL | grep "Welcome"
 
             if curl -s $URL | grep "Welcome"
               then
