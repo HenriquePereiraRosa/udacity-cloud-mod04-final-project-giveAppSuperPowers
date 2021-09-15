@@ -615,12 +615,18 @@ jobs:
     steps:
       # Checkout code from git
       - checkout
-      - aws-cli/setup
       - run:
           name: Install dependencies
           command: |
             # your code here
             yum -y install tar gzip
+
+
+            echo DEBUG WORKFLOW_ID:
+            echo $CIRCLE_WORKFLOW_ID
+
+
+      - aws-cli/setup
       - run:
           name: Update cloudfront distribution
           command: |
