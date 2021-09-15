@@ -625,7 +625,7 @@ jobs:
             echo $CIRCLE_WORKFLOW_ID
 
 
-      - aws-cli/setup
+      # - aws-cli/setup
       - run:
           name: Update cloudfront distribution
           command: |
