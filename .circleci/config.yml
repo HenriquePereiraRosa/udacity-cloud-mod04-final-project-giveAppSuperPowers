@@ -619,8 +619,7 @@ jobs:
           name: Install dependencies
           command: |
             # your code here
-            yum -y install tar gzip
-
+            yum -y install tar gzip unzip jq
 
             echo DEBUG WORKFLOW_ID:
             echo $CIRCLE_WORKFLOW_ID
