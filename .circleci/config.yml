@@ -177,7 +177,8 @@ jobs:
             #  exit 1
             cd frontend
             npm i
-            npm audit fix
+            # npm audit fix
+            npm audit fix --audit-level=critical --force
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-node_modules
@@ -200,7 +201,8 @@ jobs:
             #  exit 1
             cd backend
             npm i
-            npm audit fix
+            # npm audit fix
+            npm audit fix --audit-level=critical --force
       - save_cache:
           paths: [backend/node_modules]
           key: backend-node_modules
@@ -540,7 +542,7 @@ jobs:
           command: |
             pwd
             ls -la
-            cat /tmp/debug.log            
+            cat /tmp/debug.log
       - revert-migrations:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
       - destroy-environment:
@@ -599,6 +601,8 @@ jobs:
                 return 1
             fi
       # Here's where you will add some code to rollback on failure
+      - revert-migrations:
+          id: ${CIRCLE_WORKFLOW_ID:0:7}
       - destroy-environment:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
           delete-bucket: true
@@ -616,10 +620,16 @@ jobs:
           name: Install dependencies
           command: |
             # your code here
+            yum -y install tar gzip
       - run:
           name: Update cloudfront distribution
           command: |
             # your code here
+            aws cloudformation deploy \
+            --template-file .circleci/files/cloudfront.yml \
+            --stack-name=udapeople-cloudfront \
+            --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}" \
+            --tags project=udapeople-${CIRCLE_WORKFLOW_ID:0:7}
       # Here's where you will add some code to rollback on failure
       - destroy-environment:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
