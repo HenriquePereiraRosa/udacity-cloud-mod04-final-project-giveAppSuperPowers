@@ -620,11 +620,6 @@ jobs:
           command: |
             # your code here
             yum -y install tar gzip unzip jq
-
-            echo DEBUG WORKFLOW_ID:
-            echo $CIRCLE_WORKFLOW_ID
-
-
       # - aws-cli/setup
       - run:
           name: Update cloudfront distribution
@@ -648,6 +643,11 @@ jobs:
     steps:
       # Checkout code from git
       - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            # your code here
+            yum -y install tar gzip unzip jq
       # - run:
       #     name: Get old stack workflow id
       #     command: |
